@@ -2,7 +2,7 @@
     header("Connection-Type: application/json");
     require "./visszajelzesconnect.php";
 
-    function ReadResponses($Column, $Specification)
+    function ReadResponses($Column = "", $Specification = "")
     {
         global $LoggingData;
         if(!isset($Column) && !empty($Column)) {
@@ -15,33 +15,52 @@
         }
         try {
             $SQLstmnt = $LoggingData->prepare("SELECT * FROM uzenetek WHERE ".$Column." LIKE :Spec");
-            $SQLstmnt->execute(['Spec' => $Specification]);
+            $SQLstmnt->execute([':Spec' => $Specification]);
             return $SQLstmnt->fetchAll();
         } catch (Exception $e) {
             return [];
         }
     }
 
-    function CreateResponse($DataSet) {
+    function CreateResponse($DataSet = null) {
         global $LoggingData;
         try {
-            $SQLstmnt = $LoggingData->prepare("INSERT INTO uzenet(felhaszn_id, uzenet) VALUES (:felhaszn_id, :uzenet)");
+            if($DataSet == null)
+                throw new Exception("No data given!");
+            $SQLstmnt = $LoggingData->prepare("INSERT INTO uzenetek(felhaszn_id, uzenet) VALUES (
+                                               (SELECT id FROM felhasznalok WHERE bejelentkezes = :felhasznalo),
+                                               :uzenet)");
+            
             $SQLstmnt->execute([
-                $DataSet['felhasznalo'],
-                $DataSet['uzenet']
+                ':felhasznalo' => $DataSet['felhasznalo'],
+                ':uzenet' => $DataSet['uzenet']
             ]);
-            return true;
-        } catch(Exception $e) {
             return false;
+        } catch(Exception $e) {
+            return true;
         }
     }
 
-    if ($_SERVER["REQUEST_METHOD"] !== "POST")
-        exit();
     $Data = json_decode(file_get_contents("php://input"), true); //Adat fogadása
     //file_put_contents("./debug.log", $Data['Username'], FILE_APPEND);
     //Az átküldött adatnak 2 paramétere lesz: felhasznalo és uzenet
-    if($Data['felhasznalo'] === null || $Data['uzenet'] === null) {
-        echo json_encode();
+    //if($Data['felhasznalo'] === null || $Data['uzenet'] === null || !empty($Data['felhasznalo']) || !empty($Data['uzenet']))
+    //    echo json_encode(["Fail" => true]);
+    switch($_SERVER["REQUEST_METHOD"]) {
+        case "GET":
+            echo json_encode([
+                "Fail" => false,
+                "DataList" => ReadResponses()
+            ]);
+            break;
+        case "POST":
+            //file_put_contents("./debug.log", $Data, FILE_APPEND);
+            echo json_encode([
+                "Fail" => CreateResponse($Data)
+            ]);
+            break;
+        default:
+            echo json_encode(["Fail" => true]); 
+            break;
     }
 ?>

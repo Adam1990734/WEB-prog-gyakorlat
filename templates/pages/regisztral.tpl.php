@@ -5,11 +5,11 @@
         <meta charset="utf-8">
     </head>
     <body>
-        <?php if(isset($uzenet)) { ?>
+        <?php if(isset($uzenet)): ?>
             <h1><?= $uzenet ?></h1>
-            <?php if($ujra) { ?>
+            <?php if($ujra): ?>
                 <a href="belepes">Próbálja újra!</a>
-            <?php } ?>
-        <?php } ?>
+            <?php endif; ?>
+        <?php endif; ?>
     </body>  
 </html>

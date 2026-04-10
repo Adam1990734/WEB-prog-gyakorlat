@@ -22,7 +22,6 @@ function ReadUserInput() {
 
 /**@param {Object} Response  */
 function SendInput(Response) {
-    console.log(Response);
     if (Response == null)
         throw new Error("Unable to fetch with an empty Response message!");
     fetch(Api, {
@@ -32,9 +31,7 @@ function SendInput(Response) {
     })
     .then(Resp => Resp.json())
     .then(Resp => {
-        console.log(Resp);
-        if(Resp.Fail)
-            Output.innerHTML = "A vissza jelzését nem sikerült rögzíteni!";
+        if(Resp.Fail) Output.innerHTML = "A vissza jelzését nem sikerült rögzíteni!";
         else Output.innerHTML = "Sikeres üzenet rögzítés!";
     })
     .catch(err => console.log(err.message));
@@ -47,7 +44,7 @@ SubmitButton.addEventListener("click", (e) => {
     try {
         InputData = ReadUserInput();
     } catch(err) {
-        Output.innerHTML = "Sikereteln üzenet küldés!";
+        Output.innerHTML = "Sikeretelen üzenet küldés!";
         console.log("Sikertelen üzenet küldés: " + err.message);
     }
     SendInput(InputData);

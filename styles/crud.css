@@ -1,176 +1,151 @@
-body {
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    background-color: #f0f2f5; /* Kicsit lágyabb háttér */
-    margin: 0;
-    padding: 30px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: #2c3e50;
-}
+/* =========================
+   CRUD MODUL – TELJESEN IZOLÁLT
+   Csak .crud class
+   ========================= */
 
-h2, h3 {
-    color: #2c3e50;
+/* Címek */
+h2.crud,
+h3.crud {
     text-align: center;
     font-weight: 600;
-    margin-bottom: 25px;
+    color: #2c3e50;
+    margin-bottom: 20px;
 }
 
-#ResponsArea {
+/* Visszajelző sáv */
+#ResponsArea.crud {
     width: 100%;
-    max-width: 1600px;
-    margin-bottom: 25px;
+    max-width: 100%;
+    margin: 0 auto 25px auto;
     padding: 15px 20px;
     border-radius: 10px;
     font-weight: 500;
     text-align: center;
     display: none;
-    transition: all 0.3s ease;
 }
 
-.success {
-    display: block !important;
+#ResponsArea.crud.success {
+    display: block;
     background-color: #e8f5e9;
     color: #2e7d32;
     border: 1px solid #c8e6c9;
-    box-shadow: 0 2px 10px rgba(46, 125, 50, 0.1);
 }
 
-.error {
-    display: block !important;
+#ResponsArea.crud.error {
+    display: block;
     background-color: #ffebee;
     color: #c62828;
     border: 1px solid #ffcdd2;
-    box-shadow: 0 2px 10px rgba(198, 40, 40, 0.1);
 }
 
-#InputArea {
-    background: #ffffff;
-    padding: 35px;
+/* Űrlap */
+#InputArea.crud {
+    background-color: #ffffff;
+    padding: 30px;
     border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-    width: 100%;
-    max-width: 450px;
-    margin-bottom: 40px;
     border: 1px solid #e1e4e8;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    max-width: 500px;
+    margin: 0 auto 40px auto;
 }
 
-#InputArea label {
+/* Címkék */
+label.crud {
     display: block;
     font-weight: 600;
-    color: #34495e;
     font-size: 0.85em;
+    color: #34495e;
+    margin-bottom: 5px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    margin-bottom: 5px;
 }
 
-#InputArea input {
+/* Input mezők */
+input.crud {
     width: 100%;
     padding: 12px 15px;
-    margin: 0 0 20px 0;
-    display: inline-block;
+    margin-bottom: 18px;
     border: 2px solid #edf2f7;
     border-radius: 8px;
-    box-sizing: border-box;
     font-size: 1em;
-    transition: all 0.3s ease;
     background-color: #f8fafc;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
-#InputArea input:focus {
+input.crud:focus {
     border-color: #3498db;
-    background-color: #fff;
+    background-color: #ffffff;
     outline: none;
-    box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
 }
 
-button {
-    padding: 12px 24px;
-    border: none;
+/* Gombok */
+button.crud {
+    padding: 10px 22px;
     border-radius: 8px;
+    border: none;
     cursor: pointer;
     font-weight: 600;
-    font-size: 0.95em;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    letter-spacing: 0.3px;
+    font-size: 0.9em;
 }
 
-button:active {
-    transform: scale(0.98);
+#SaveButton.crud {
+    background-color: #3498db;
+    color: #ffffff;
 }
 
-#SaveButton {
-    background-color: #3498db; /* A nav kékjéhez passzol */
-    color: white;
-    box-shadow: 0 4px 6px rgba(52, 152, 219, 0.2);
-}
-
-#SaveButton:hover {
+#SaveButton.crud:hover {
     background-color: #2980b9;
-    box-shadow: 0 6px 12px rgba(52, 152, 219, 0.3);
 }
 
-#ResetButton {
+#ResetButton.crud {
     background-color: #95a5a6;
-    color: white;
+    color: #ffffff;
     margin-left: 10px;
 }
 
-#ResetButton:hover {
+#ResetButton.crud:hover {
     background-color: #7f8c8d;
 }
 
-table {
-    width: 100%;
-    max-width: 1600px;
+/* Táblázat */
+table.crud {
+    width: 60%;
+    margin: 0 auto;
     border-collapse: separate;
     border-spacing: 0;
-    background: white;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    background-color: #ffffff;
     border-radius: 12px;
-    overflow: hidden;
     border: 1px solid #e1e4e8;
+    overflow: hidden;
 }
 
-thead {
+/* Táblázat fejléc */
+thead.crud {
     background-color: #2c3e50;
-    color: white;
+    color: #ffffff;
 }
 
-th {
-    padding: 18px 20px;
-    text-align: left;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 0.85em;
-    letter-spacing: 1px;
-}
-
-td {
+th.crud {
     padding: 16px 20px;
-    text-align: left;
-    border-bottom: 1px solid #f0f2f5;
-    color: #444;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    letter-spacing: 0.5px;
 }
 
-tbody tr:last-child td {
+/* Táblázat cellák */
+td.crud {
+    text-align: center;
+    padding: 14px 20px;
+    color: #444;
+    border-bottom: 1px solid #f0f2f5;
+}
+
+tbody.crud tr:last-child td.crud {
     border-bottom: none;
 }
 
-tbody tr:hover {
+tbody.crud tr:hover {
     background-color: #f8fafc;
-}
-
-.btn-delete {
-    background: #e74c3c;
-    color: white;
-    padding: 6px 12px;
-    font-size: 0.8em;
-    border-radius: 6px;
-    transition: background 0.2s;
-}
-
-.btn-delete:hover {
-    background: #c0392b;
 }

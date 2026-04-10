@@ -6,7 +6,6 @@
 	<meta charset="utf-8">
 	<title><?= $ablakcim['cim'] . ( (isset($ablakcim['mottó'])) ? ('|' . $ablakcim['mottó']) : '' ) ?></title>
 	<link rel="stylesheet" href="./styles/stilus.css" type="text/css">
-	<?php var_dump($keres); ?>
 	<?php if(file_exists('./styles/'.$keres['fajl'].'.css')): ?>
 		<link rel="stylesheet" href="./styles/<?= $keres['fajl']?>.css" type="text/css">
 	<?php endif; ?>
@@ -20,15 +19,25 @@
     <div id="wrapper">
             <nav>
                 <ul>
-					<?php foreach ($oldalak as $url => $oldal) { ?>
-						<?php if(isset($_SESSION['login']) && $oldal['menun']['fiok'] || ! isset($_SESSION['login']) && $oldal['menun']['vendeg']) { ?>
+					<?php foreach ($oldalak as $url => $oldal): ?>
+						<?php if((isset($_SESSION['login']) && $oldal['menun']['fiok'] || ! isset($_SESSION['login']) && $oldal['menun']['vendeg']) && !$oldal['kiemelt']): ?>
 							<li<?= (($oldal == $keres) ? ' class="active"' : '') ?>>
 							<a href="<?= ($url == '/') ? '.' : $url ?>">
 							<?= $oldal['szoveg'] ?></a>
 							</li>
-						<?php } ?>
-					<?php } ?>
+						<?php endif; ?>
+					<?php endforeach; ?>
                 </ul>
+				<ul>
+					<?php foreach ($oldalak as $url => $oldal): ?>
+						<?php if((isset($_SESSION['login']) && $oldal['menun']['fiok'] || ! isset($_SESSION['login']) && $oldal['menun']['vendeg']) && $oldal['kiemelt']): ?>
+							<li<?= (($oldal == $keres) ? ' class="active"' : '') ?>>
+							<a href="<?= ($url == '/') ? '.' : $url ?>">
+							<?= $oldal['szoveg'] ?></a>
+							</li>
+						<?php endif; ?>
+					<?php endforeach; ?>
+				</ul>
             </nav>
         <div id="content">
             <?php include("./templates/pages/{$keres['fajl']}.tpl.php"); ?>

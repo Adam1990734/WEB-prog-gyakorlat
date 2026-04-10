@@ -31,7 +31,7 @@ INSERT INTO `felhasznalok` (`id`,`csaladi_nev`,`uto_nev`,`bejelentkezes`,`jelszo
 -- Vendég felhasználó egy 'statikus' személy mindig benne van.
 INSERT INTO felhasznalok(bejelentkezes, jelszo) VALUES('vendég', '');
 
-CREATE TABLE Uzenetek (
+CREATE TABLE uzenetek (
     id int(10) unsigned PRIMARY KEY AUTO_INCREMENT,
 	felhaszn_id int(10) unsigned,
     uzenet varchar(300) NOT NULL
