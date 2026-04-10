@@ -1,0 +1,56 @@
+/* Képgyűjtemény konténer - rács elrendezés */
+.image-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 25px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Egy képkártya alapja */
+.image-card {
+    background: #ffffff;
+    border-radius: 15px;
+    overflow: hidden; /* Hogy a kép ne lógjon ki a lekerekítésből */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    border: 1px solid #e1e4e8;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+/* A kép formázása a kártyán belül */
+.image-card img {
+    width: 100%;
+    height: 200px; /* Fix magasság, hogy egységesek legyenek */
+    object-fit: cover; /* Kitölti a helyet torzítás nélkül */
+    transition: transform 0.4s ease;
+}
+
+/* Kártya szöveges része (opcionális feliratokhoz) */
+.image-card .caption {
+    padding: 15px;
+    text-align: center;
+    font-weight: 500;
+    color: #2c3e50;
+    background-color: #ffffff;
+}
+
+/* Hover effekt a kártyára: enyhe emelkedés és erősebb árnyék */
+.image-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    border-color: #3498db; /* A korábbi kék színünk */
+}
+
+/* Hover effekt a képre: az általad kért "nagyon pici" nagyítás */
+.image-card:hover img {
+    transform: scale(1.08); /* 8%-os nagyítás */
+}
+
+/* Ha a kártya alján van felirat, annak a színe is változhat */
+.image-card:hover .caption {
+    color: #3498db;
+}
