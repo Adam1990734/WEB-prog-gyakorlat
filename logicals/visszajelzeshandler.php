@@ -2,20 +2,34 @@
     header("Connection-Type: application/json");
     require "./visszajelzesconnect.php";
 
-    function ReadResponses($Column = "", $Specification = "")
+    function ReadResponses($Limitation = 20, $Specification = "")
     {
         global $LoggingData;
-        if(!isset($Column) && !empty($Column)) {
+        if(!isset($Specification) || empty($Specification)) {
             try {
-                $SQLstmnt = $LoggingData->query("SELECT * FROM uzenetek");
+                $SQLstmnt = null;
+                if($Limitation !== 0) $SQLstmnt = $LoggingData->query("SELECT bejelentkezes felhasznalo, uzenet, kelt
+                                                 FROM uzenetek JOIN felhasznalok ON uzenetek.felhaszn_id = felhasznalok.id
+                                                 ORDER BY 3 desc
+                                                 LIMIT ".$Limitation."
+                                                ");
+                else $SQLstmnt = $LoggingData->query("SELECT bejelentkezes felhasznalo, uzenet, kelt
+                                                 FROM uzenetek JOIN felhasznalok ON uzenetek.felhaszn_id = felhasznalok.id
+                                                 ORDER BY 3 desc
+                                                ");
                 return $SQLstmnt->fetchAll();
             } catch (Exception $e) {
                 return [];
             }
         }
         try {
-            $SQLstmnt = $LoggingData->prepare("SELECT * FROM uzenetek WHERE ".$Column." LIKE :Spec");
-            $SQLstmnt->execute([':Spec' => $Specification]);
+            $SQLstmnt = $LoggingData->prepare("SELECT bejelentkezes felhasznalo, uzenet, kelt
+                                               FROM uzenetek JOIN felhasznalok ON uzenetek.felhaszn_id = felhasznalok.id
+                                               WHERE uzenet LIKE :Spec
+                                               ORDER BY 3 desc
+                                               LIMIT ".$Limitation."
+                                              ");
+            $SQLstmnt->execute([':Spec' => "%".$Specification."%"]);
             return $SQLstmnt->fetchAll();
         } catch (Exception $e) {
             return [];
@@ -27,9 +41,11 @@
         try {
             if($DataSet == null)
                 throw new Exception("No data given!");
-            $SQLstmnt = $LoggingData->prepare("INSERT INTO uzenetek(felhaszn_id, uzenet) VALUES (
+            $SQLstmnt = $LoggingData->prepare("INSERT INTO uzenetek(felhaszn_id, uzenet, kelt) VALUES (
                                                (SELECT id FROM felhasznalok WHERE bejelentkezes = :felhasznalo),
-                                               :uzenet)");
+                                               :uzenet,
+                                               NOW())
+                                              ");
             
             $SQLstmnt->execute([
                 ':felhasznalo' => $DataSet['felhasznalo'],
@@ -42,15 +58,22 @@
     }
 
     $Data = json_decode(file_get_contents("php://input"), true); //Adat fogadása
+
+    //var_dump(ReadResponses());
+    //exit();
     //file_put_contents("./debug.log", $Data['Username'], FILE_APPEND);
     //Az átküldött adatnak 2 paramétere lesz: felhasznalo és uzenet
     //if($Data['felhasznalo'] === null || $Data['uzenet'] === null || !empty($Data['felhasznalo']) || !empty($Data['uzenet']))
     //    echo json_encode(["Fail" => true]);
     switch($_SERVER["REQUEST_METHOD"]) {
         case "GET":
-            echo json_encode([
+            if(empty($_GET)) echo json_encode([
                 "Fail" => false,
                 "DataList" => ReadResponses()
+            ]);
+            else echo json_encode([
+                "Fail" => false,
+                "DataList" => ReadResponses(0)
             ]);
             break;
         case "POST":

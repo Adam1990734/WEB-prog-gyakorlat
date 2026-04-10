@@ -30,8 +30,8 @@ function SendInput(Response) {
         body: JSON.stringify(Response)
     })
     .then(Resp => Resp.json())
-    .then(Resp => {
-        if(Resp.Fail) Output.innerHTML = "A vissza jelzését nem sikerült rögzíteni!";
+    .then(Data => {
+        if(Data.Fail) Output.innerHTML = "A vissza jelzését nem sikerült rögzíteni!";
         else Output.innerHTML = "Sikeres üzenet rögzítés!";
     })
     .catch(err => console.log(err.message));
