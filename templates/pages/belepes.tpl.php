@@ -1,15 +1,15 @@
-    <form action = "belep" method = "post">
-      <fieldset>
-        <legend>Bejlentkezés</legend>
-        <br>
-        <input type="text" name="felhasznalo" placeholder="felhasználó" required><br><br>
-        <input type="password" name="jelszo" placeholder="jelszó" required><br><br>
-        <input type="submit" name="belepes" value="Belépés">
-        <br>&nbsp;
-      </fieldset>
-    </form>
-    <h3>Regisztrálja magát, ha még nem felhasználó!</h2>
-    <form action = "regisztral" method = "post">
+  <form action="belep" method="post">
+    <fieldset>
+      <legend>Bejlentkezés</legend>
+      <br>
+      <input type="text" value="<?= (isset($_SESSION['login']) && !empty($_SESSION['login'])) ? $_SESSION['login'] : "" ?>" name="felhasznalo" placeholder="felhasználó" required><br><br>
+      <input type="password" name="jelszo" placeholder="jelszó" required><br><br>
+      <input type="submit" name="belepes" value="Belépés">
+      <br>&nbsp;
+    </fieldset>
+  </form>
+  <h3>Regisztrálja magát, ha még nem felhasználó!</h2>
+    <form action="regisztral" method="post">
       <fieldset>
         <legend>Regisztráció</legend>
         <br>

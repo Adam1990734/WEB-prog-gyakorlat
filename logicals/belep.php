@@ -1,6 +1,6 @@
 <?php
 //Ez szerinte jó így ezzel nem kell semmit csinálni
-if(isset($_POST['felhasznalo']) && isset($_POST['jelszo'])) {
+if(isset($_POST['felhasznalo']) && isset($_POST['jelszo']) && !empty($_POST['felhasznalo']) && !empty($_POST['jelszo'])) {
     try {
         // Kapcsolódás
         $dbh = new PDO('mysql:host=localhost;dbname=bejelentkezes', 'root', '',
@@ -14,14 +14,12 @@ if(isset($_POST['felhasznalo']) && isset($_POST['jelszo'])) {
         if($row) {
             $_SESSION['csn'] = $row['csaladi_nev'];
             $_SESSION['un'] = $row['uto_nev'];
-            $_SESSION['login'] = $_POST['felhasznalo'];
         }
+        $_SESSION['login'] = $_POST['felhasznalo'];
     }
     catch (PDOException $e) {
-        $errormessage = "Hiba: ".$e->getMessage();
+        $errormessage = "Hiba: Váratlan hiba feldolgozás során.";
     }      
 }
-else {
-    header("Location: .");
-}
+else $errormessage = "Nem megfelelő adatbevitel";
 ?>
