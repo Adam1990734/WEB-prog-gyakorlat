@@ -1,7 +1,7 @@
-CREATE DATABASE `bejelentkezes`
+CREATE DATABASE Bejelentkezes
 CHARACTER SET utf8 COLLATE utf8_general_ci;
 
-USE `bejelentkezes`;
+USE Bejelentkezes;
 
 CREATE TABLE `felhasznalok` (
   `id` int(10) unsigned NOT NULL auto_increment,
@@ -11,7 +11,7 @@ CREATE TABLE `felhasznalok` (
   `jelszo` varchar(40) NOT NULL default '',
   PRIMARY KEY  (`id`)
 )
-ENGINE = MYISAM
+ENGINE = INNODB
 CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 INSERT INTO `felhasznalok` (`id`,`csaladi_nev`,`uto_nev`,`bejelentkezes`,`jelszo`) VALUES 
@@ -27,3 +27,17 @@ INSERT INTO `felhasznalok` (`id`,`csaladi_nev`,`uto_nev`,`bejelentkezes`,`jelszo
  (10,'Családi_10','Utónév_10','Login10',sha1('login10')),
  (11,'Családi_11','Utónév_11','Login11',sha1('login11')),
  (12,'Családi_12','Utónév_12','Login12',sha1('login12'));
+
+-- Vendég felhasználó egy 'statikus' személy mindig benne van.
+INSERT INTO felhasznalok(bejelentkezes, jelszo) VALUES('vendég', '');
+
+CREATE TABLE Uzenetek (
+    id int(10) unsigned PRIMARY KEY AUTO_INCREMENT,
+	felhaszn_id int(10) unsigned,
+    uzenet varchar(300) NOT NULL
+)
+ENGINE=INNODB
+CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+ALTER TABLE uzenetek ADD CONSTRAINT uzenetek_fk
+FOREIGN KEY(felhaszn_id) REFERENCES felhasznalok(id) ON DELETE CASCADE ON UPDATE CASCADE;

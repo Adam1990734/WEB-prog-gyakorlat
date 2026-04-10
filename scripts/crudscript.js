@@ -135,6 +135,7 @@ function DeleteInventor(Id) {
         ResponsElement.innerHTML = "Error: Cannot delete the selected inventor!<br>";
         console.log("Delete: " + Err.message);
     });
+    ResponsElement.innerHTML = "";
 }
 
 function UpdateInventor(Id) {
