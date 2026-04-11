@@ -2,18 +2,20 @@ const Output = document.getElementById("Output");
 const Loader = document.getElementById("Loader");
 const Api = "./logicals/visszajelzeshandler.php";
 
-/**@param {Object} Record  */
-function CreateRow(Record) {
+/**@param {{felhasznalo: "", uzenet: "", kelt: ""}} Record  */
+function CreateMessage(Record) {
     if(Record === null)
         throw new Error("Not loadable record data given!");
-    const Row = document.createElement("tr");
-    Object.entries(Record).forEach(([key, value]) => {
-        const Cell = document.createElement("td");
-        Cell.className = "uzenet";
-        Cell.innerText = value;
-        Row.appendChild(Cell);
-    });
-    Row.className = "uzenet";
+    const Row = document.createElement("div"); Row.className = "uzenet";
+
+    const Header = document.createElement("div"); Header.className = "uzenet";
+    Header.innerHTML = "<span class=\"uzenet\">" + Record.felhasznalo + "</span> <br>" + Record.kelt + "<br> <br>";
+
+    const Content = document.createElement("article"); Content.className = "uzenet";
+    Content.innerText = Record.uzenet;
+
+    Row.appendChild(Header);
+    Row.appendChild(Content);
     return Row;
 }
 
@@ -22,7 +24,8 @@ function LoadFirstFewResponses() {
     .then(Resp => Resp.json())
     .then(Data => {
         if(Data.Fail) throw new Error("Error while trying to load in data!");
-        Data["DataList"].forEach(Record => Output.appendChild(CreateRow(Record)));
+        console.log(Data["DataList"]);
+        Data["DataList"].forEach(Record => Output.appendChild(CreateMessage(Record)));
     })
     .catch(Err => console.log(Err.message));
 }
@@ -32,7 +35,7 @@ function LoadAllResponses() {
     .then(Resp => Resp.json())
     .then(Data => {
         if(Data.Fail) throw new Error("Error while trying to load in data!");
-        Data["DataList"].forEach(Record => Output.appendChild(CreateRow(Record)));
+        Data["DataList"].forEach(Record => Output.appendChild(CreateMessage(Record)));
     })
     .catch(Err => console.log(Err.message));
 }

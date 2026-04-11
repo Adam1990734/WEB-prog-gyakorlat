@@ -48,4 +48,5 @@ SubmitButton.addEventListener("click", (e) => {
         console.log("Sikertelen üzenet küldés: " + err.message);
     }
     SendInput(InputData);
+    InputElement.ResponseElement.value = "";
 });
