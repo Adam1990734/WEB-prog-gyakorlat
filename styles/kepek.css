@@ -1,5 +1,4 @@
-/* Képgyűjtemény konténer - rács elrendezés */
-.image-container {
+.kepek#Output {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 25px;
@@ -8,49 +7,87 @@
     margin: 0 auto;
 }
 
-/* Egy képkártya alapja */
-.image-card {
+.kepek#Output > div {
+    padding: 20px;
     background: #ffffff;
     border-radius: 15px;
-    overflow: hidden; /* Hogy a kép ne lógjon ki a lekerekítésből */
+    overflow: hidden;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     border: 1px solid #e1e4e8;
     display: flex;
     flex-direction: column;
     cursor: pointer;
+    transition: all 0.35s ease;
 }
 
-/* A kép formázása a kártyán belül */
-.image-card img {
+.kepek#Output img {
     width: 100%;
-    height: 200px; /* Fix magasság, hogy egységesek legyenek */
-    object-fit: cover; /* Kitölti a helyet torzítás nélkül */
-    transition: transform 0.4s ease;
+    height: fit-content;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.35s ease;
 }
 
-/* Kártya szöveges része (opcionális feliratokhoz) */
-.image-card .caption {
-    padding: 15px;
+.kepek#Output p {
+    padding: 12px 15px;
     text-align: center;
     font-weight: 500;
     color: #2c3e50;
+    margin: 0;
     background-color: #ffffff;
 }
 
-/* Hover effekt a kártyára: enyhe emelkedés és erősebb árnyék */
-.image-card:hover {
-    transform: translateY(-8px);
+.kepek#Output > div:hover {
+    transform: translateY(-6px);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-    border-color: #3498db; /* A korábbi kék színünk */
+    border-color: #3498db;
 }
 
-/* Hover effekt a képre: az általad kért "nagyon pici" nagyítás */
-.image-card:hover img {
-    transform: scale(1.08); /* 8%-os nagyítás */
+.kepek#Output > div:hover img {
+    transform: scale(1.08);
 }
 
-/* Ha a kártya alján van felirat, annak a színe is változhat */
-.image-card:hover .caption {
+.kepek#Output > div:hover p {
     color: #3498db;
+}
+
+.kepek form {
+    max-width: 400px;
+    margin: 30px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.kepek input[type="file"] {
+    width: fit-content;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #e1e4e8;
+    background-color: #ffffff;
+}
+
+.kepek button {
+    padding: 12px 28px;
+    border-radius: 12px;
+    border: 1px solid #e1e4e8;
+    background-color: #3498db;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+    transition: all 0.3s ease;
+}
+
+.kepek button:hover {
+    background-color: #217dbb;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
+}
+
+.kepek button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
 }

@@ -13,13 +13,6 @@ header {
     overflow: hidden;
 }
 
-header img {
-    float: left;
-    margin: 5px 20px 5px 0px;
-    border-radius: 8px;
-    transition: transform 0.3s ease;
-}
-
 header img:hover {
     transform: scale(1.05);
 }
@@ -86,6 +79,7 @@ div#content {
     border: 1px solid #eee;
 }
 
+/*
 div#content img{
     float: right;
     width: 20em;
@@ -96,6 +90,7 @@ div#content img{
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
+*/
 
 footer {
     border-radius: 12px;

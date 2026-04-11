@@ -42,3 +42,16 @@ CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 ALTER TABLE uzenetek ADD CONSTRAINT uzenetek_fk
 FOREIGN KEY(felhaszn_id) REFERENCES felhasznalok(id) ON DELETE CASCADE ON UPDATE CASCADE;
+
+CREATE TABLE kepek (
+    id int(10) unsigned PRIMARY KEY AUTO_INCREMENT,
+    felhaszn_id int(10) unsigned,
+    kep_tipus varchar(15) NOT NULL DEFAULT '',
+    kep_nev varchar(40) NOT NULL DEFAULT '',
+    kep longblob NOT NULL
+)
+ENGINE=INNODB
+CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+ALTER TABLE kepek ADD CONSTRAINT kepek_fk
+FOREIGN KEY(felhaszn_id) REFERENCES felhasznalok(id) ON DELETE CASCADE;
