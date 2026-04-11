@@ -1,1 +1,1 @@
-<h3>Valami szöveg kell ide</h3>
+<h3 class="fooldal">Valami szöveg kell ide</h3>
