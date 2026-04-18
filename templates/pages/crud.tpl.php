@@ -1,4 +1,4 @@
-<h3 class="crud">Feltalálók tábla - felatlálók tábla</h3>
+<h3 class="crud">Feltalálók tábla</h3>
 <!-- Alapból ne jelenjen meg semmi -->
 <div id="ResponsArea" class="crud"></div>
 <form id="InputArea" class="crud">

@@ -28,9 +28,9 @@ $oldalak = array(
     'regisztral' => array('fajl' => 'regisztral', 'szoveg' => '', 'menun' => array('fiok' => false, 'vendeg' => false)),
     //Interaktív oldalak:
     'kapcsolat' => array('fajl' => 'kapcs', 'szoveg' => 'Kapcsolat', 'menun' => array('fiok' => true, 'vendeg' => true), 'kiemelt' => false),
-    'uzenetek' => array('fajl' => 'uzenet', 'szoveg' => 'Üzenetek', 'menun' => array('fiok' => true, 'vendeg' => true), 'kiemelt' => false),
-    'kepek' => array('fajl' => 'kepek', 'szoveg' => 'Képek', 'menun' => array('fiok' => true, 'vendeg' => false), 'kiemelt' => false),
-    'CRUD' => array('fajl' => 'crud', 'szoveg' => 'CRUD', 'menun' => array('fiok' => true, 'vendeg' => false), 'kiemelt' => false)
+    'uzenetek' => array('fajl' => 'uzenet', 'szoveg' => 'Üzenetek', 'menun' => array('fiok' => true, 'vendeg' => false), 'kiemelt' => false),
+    'kepek' => array('fajl' => 'kepek', 'szoveg' => 'Képek', 'menun' => array('fiok' => true, 'vendeg' => true), 'kiemelt' => false),
+    'CRUD' => array('fajl' => 'crud', 'szoveg' => 'CRUD', 'menun' => array('fiok' => true, 'vendeg' => true), 'kiemelt' => false)
 );
 $hiba_oldal = array ('fajl' => '404', 'szoveg' => 'A keresett oldal nem található!');
 ?>
