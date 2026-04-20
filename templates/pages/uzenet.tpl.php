@@ -1,5 +1,7 @@
-<h3 class="uzenet">Az üzenőfal</h3>
-<div class="uzenet" id="Output"></div>
-<button class="uzenet" id="Loader">Összes</button>
+<div id="uzenet">
+    <h3 >Az üzenőfal</h3>
+    <div id="Output"></div>
+    <button id="Loader">Összes</button>
 
-<script src="./scripts/uzenet.js"></script>
+    <script src="./scripts/uzenet.js"></script>
+</div>
