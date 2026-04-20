@@ -7,6 +7,7 @@ const OutputElement = document.getElementById("OutputArea");//= a tbody elemmel
 const ResponsElement = document.getElementById("ResponsArea");//= ide jönnek az üzenetek a fetch-ből!
 const SaveButton = document.getElementById("SaveButton");//form-nak a submit gombja
 const ResetButton = document.getElementById("ResetButton");
+const LoadAll = document.getElementById("LoadAll");//Mind betöltés
 const ServerApi = "./logicals/crudhandler.php";
 
 //================================== Fetch rendszer ========================================
@@ -76,6 +77,23 @@ function CreateRow(Record = null) {
     return NewRow;
 }
 
+function ReadFirstFewInventor() {
+    fetch(ServerApi+"?Limit=0")
+    .then(Resp => Resp.json())
+    .then(Payload => {
+        if(Payload.Fail)
+            throw new Error("Cannot load in!");
+        else {
+            if(!Array.isArray(Payload.Records))
+               throw new Error("Cannot load in!");
+            //Adatok betöltése:
+            OutputElement.innerHTML = "";
+            Payload.Records.forEach(Record => {OutputElement.appendChild(CreateRow(Record));});
+            ResponsElement.innerHTML += "The inventors are succesfully loaded!<br>";
+        }
+    })
+}
+
 function ReadInventors() {
     fetch(ServerApi)
     .then(Resp => Resp.json())
@@ -109,7 +127,7 @@ function CreateInventor(Record = {Name: "", Born: 0, Died: 0}) {
             throw new Error("Cannot save Inventor!");
         else {
             ResponsElement.innerHTML += "The new inventor is succesfully saved!<br>";
-            ReadInventors();
+            ReadFirstFewInventor();
         }
     })
     .catch(Err => {
@@ -131,7 +149,7 @@ function DeleteInventor(Id) {
             throw new Error("Cannot delete the selected record!");
         else {
             ResponsElement.innerHTML += "The selected inventor is succesfully deleted!<br>";
-            ReadInventors();
+            ReadFirstFewInventor();
         }
     })
     .catch(Err => {
@@ -157,7 +175,7 @@ function UpdateInventor(Id) {
             throw new Error("Cannot update the selected record!");
         else {
             ResponsElement.innerHTML += "The selected inventor is succesfully updated!<br>";
-            ReadInventors();
+            ReadFirstFewInventor();
         }
     })
     .catch(Err => {
@@ -190,10 +208,11 @@ SaveButton.addEventListener("click", (e) => {
     ResponsElement.innerHTML = "";
 });
 
+LoadAll.addEventListener("click", ReadInventors);
 
 ResetButton.addEventListener("reset", () => {
     SelectedInventor.Id = null;
     SelectedInventor.isEdit = false;
 });
 
-document.addEventListener("DOMContentLoaded", ReadInventors);
+document.addEventListener("DOMContentLoaded", ReadFirstFewInventor);

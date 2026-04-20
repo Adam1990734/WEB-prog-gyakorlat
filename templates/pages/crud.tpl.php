@@ -15,17 +15,18 @@
         <button id="SaveButton" type="submit">Save</button>
         <button id="ResetButton" type="reset">Clear</button>
     </form>
-    <table >
-        <thead >
-            <tr >
-                <th >Telejes név</th>
-                <th >Születési dátum</th>
-                <th >Halálozi dátum</th>
-                <th >Műveletek</th>
+    <button id="LoadAll">Összes</button>
+    <table>
+        <thead>
+            <tr>
+                <th>Telejes név</th>
+                <th>Születési dátum</th>
+                <th>Halálozi dátum</th>
+                <th>Műveletek</th>
             </tr>
         </thead>
         <!-- Ide jön majd a beolvasott adatok halmaza -->
-        <tbody  id="OutputArea"></tbody>
+        <tbody id="OutputArea"></tbody>
     </table>
     <script src="./scripts/crud.js"></script>
 </div>

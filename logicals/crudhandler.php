@@ -3,9 +3,14 @@
     header("Content-Type: application/json");
     require("./crudconnect.php");
 
-    function ReadInventors() {
+    function ReadInventors($Limit = 0) {
         global $DatabaseAPI;
-        $SQLstmnt = $DatabaseAPI->query("SELECT * FROM kutato");
+        //file_put_contents(__DIR__."/debug.log", "Read: ".$Limit."\n", FILE_APPEND);
+        if($Limit <= 0) {
+            $SQLstmnt = $DatabaseAPI->query("SELECT * FROM kutato");
+            return $SQLstmnt->fetchAll();
+        }
+        $SQLstmnt = $DatabaseAPI->query("SELECT * FROM kutato LIMIT ".$Limit);
         return $SQLstmnt->fetchAll();
     }
 
@@ -44,6 +49,7 @@
             $SQLstmnt = $DatabaseAPI->prepare("DELETE FROM kutato WHERE fkod = ?");
             $SQLstmnt->execute([$Id]);
         } catch(Exception $e) {
+            //file_put_contents(__DIR__."/debug.log", "DELETE: ".$e->getMessage()."\n", FILE_APPEND);
             throw new Exception($e->getMessage());
         }
     }
@@ -58,6 +64,14 @@
     switch ($RequestType) {
         case "GET":
             try {
+                //file_put_contents(__DIR__."/debug.log", "GET: ".print_r($_GET, true)."\n", FILE_APPEND);
+                if(!empty($_GET)) {
+                    echo json_encode([
+                        "Fail" => false,
+                        "Records" => ReadInventors(10)
+                    ]);
+                    exit();
+                }
                 echo json_encode([
                     "Fail" => false,
                     "Records" => ReadInventors()
