@@ -1,33 +1,28 @@
-/*
-Itt ebben van egy text area (van id)
-Van egy button benne ami a küldésre van és van egy usernek vissza jelző h3-as tag
-
-EGY VALAMIRE FIGYELJ HOGY A Username ID INPUT ELEMET NE VÁLTOZTASD VISSZA LÁTHATÓVÁ!!!!!!!!!!!!!!!!!
-*/
-/* ===== ALAP ===== */
-.kapcs {
+#kapcs {
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #333;
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    overflow: hidden;
 }
 
-/* ===== CÍMEK ===== */
-h2.kapcs {
+#kapcs h2 {
     margin: 0 0 10px 0;
     padding-bottom: 10px;
     color: #2c3e50;
     border-bottom: 2px solid #3498db;
 }
 
-h3.kapcs {
+#kapcs h3 {
     margin: 10px 0 25px 0;
     min-height: 1.5em;
     font-weight: 500;
     color: #3498db;
 }
 
-/* ===== ASIDE – JOBBRA FLOATOLVA ===== */
-aside.kapcs {
+#kapcs aside {
     float: right;
     width: 320px;
     margin-left: 30px;
@@ -43,8 +38,7 @@ aside.kapcs {
     box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
 
-/* ===== ASIDE KÉP ===== */
-aside.kapcs img.kapcs {
+#kapcs aside img {
     width: 110px;
     height: auto;
     border-radius: 10px;
@@ -52,26 +46,23 @@ aside.kapcs img.kapcs {
     flex-shrink: 0;
 }
 
-/* ===== ASIDE SZÖVEG ===== */
-aside.kapcs p.kapcs {
+#kapcs aside p {
     margin: 0;
     line-height: 1.6;
     color: #555;
     font-size: 0.95rem;
 }
 
-/* ===== FORM ===== */
-form.kapcs {
+#kapcs form {
     background-color: #ffffff;
     padding: 25px;
     border-radius: 12px;
     border: 1px solid #e0e0e0;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    overflow: hidden; /* float miatt fontos */
+    overflow: hidden;
 }
 
-/* ===== TEXTAREA ===== */
-textarea.kapcs {
+#ResponseArea {
     width: 100%;
     min-height: 160px;
     padding: 12px;
@@ -79,17 +70,18 @@ textarea.kapcs {
     border: 1px solid #ccc;
     font-size: 1rem;
     resize: vertical;
+    box-sizing: border-box; /* Hogy a padding ne nyomja ki a szélességet */
     transition: border 0.3s, box-shadow 0.3s;
+    font-family: inherit;
 }
 
-textarea.kapcs:focus {
+#ResponseArea:focus {
     outline: none;
     border-color: #3498db;
     box-shadow: 0 0 0 3px rgba(52,152,219,0.15);
 }
 
-/* ===== GOMB ===== */
-button.kapcs {
+#ResponseSubmit {
     background-color: #2c3e50;
     color: #ecf0f1;
     padding: 10px 22px;
@@ -101,8 +93,12 @@ button.kapcs {
     transition: background 0.3s, box-shadow 0.2s, transform 0.2s;
 }
 
-button.kapcs:hover {
+#ResponseSubmit:hover {
     background-color: #3498db;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     transform: translateY(-1px);
+}
+
+#Username {
+    display: none !important;
 }
