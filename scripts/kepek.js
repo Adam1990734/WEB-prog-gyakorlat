@@ -91,7 +91,11 @@ Submit.addEventListener("click", (e) => {
     })
     .then(Resp => Resp.json())
     .then(Data => {
-        if(Data.Fail) UserResponse.innerHTML = "Hiba a kép feltöltéskor!";
+        if(Data.Fail) {
+            if(Data.hasOwnProperty("Message"))
+                UserResponse.innerHTML = Data.Message;
+            else UserResponse.innerHTML = "Hiba a képek betöltésekor!";
+        }
         else UserResponse.innerHTML = "Sikeres kép felötlés!";
         LoadAllPictures();
     })
@@ -99,9 +103,6 @@ Submit.addEventListener("click", (e) => {
     //Bemenet ürítése:
     InputElements.Image.value = "";
     InputElements.Image.files = null;
-
-    document.getElementById("fileName").innerHTML = "Kattints a kép kiválasztásához";
-    document.getElementById("fileName").style.color = "#2c3e50";
 });
 
 document.addEventListener("DOMContentLoaded", LoadFirstFewPictures);
@@ -112,14 +113,3 @@ Loader.addEventListener("click", () => {
     LoadAllPictures();
     Loader.style.display = "none";
 })
-
-InputElements.Image.addEventListener("change", function() {
-    const fileNameDisplay = document.getElementById("fileName");
-    if (this.files && this.files.length > 0) {
-        fileNameDisplay.innerHTML = "Kiválasztott fájl: " + this.files[0].name;
-        fileNameDisplay.style.color = "#3498db"; // Kékre vált, ha van fájl
-    } else {
-        fileNameDisplay.innerHTML = "Kattints a kép kiválasztásához";
-        fileNameDisplay.style.color = "#2c3e50";
-    }
-});
