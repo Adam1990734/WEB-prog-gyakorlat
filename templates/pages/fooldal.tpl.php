@@ -1,5 +1,5 @@
 <div id="fooldal" class="container ">
-
+    
     <section class="hero ">
         <h5 class="">Üdvözöllek a Főoldalon</h5>
         <p class="">A főoldal amit a gyakorlati beadandóhoz készítettünk.</p>
@@ -47,4 +47,5 @@
             </iframe>
         </div>
     </section>
+
 </div>

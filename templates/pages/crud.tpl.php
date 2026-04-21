@@ -15,9 +15,7 @@
         <button id="SaveButton" type="submit">Save</button>
         <button id="ResetButton" type="reset">Clear</button>
     </form>
-    <div class="table-header-actions">
-        <button id="LoadAll">Összes</button>
-    </div>
+    <button id="LoadAll">Összes</button>
     <table>
         <thead>
             <tr>

@@ -4,10 +4,9 @@
     font-weight: 600;
     color: #2c3e50;
     margin-bottom: 25px;
-    font-size: 30px;
 }
 
-/* --- VISSZAJELZŐ SÁV (Siker/Hiba) --- */
+/* Visszajelző sáv - a kért 12px-es kerekítéssel */
 #ResponsArea {
     width: 100%;
     max-width: 500px;
@@ -34,7 +33,7 @@
     border: 1px solid #ffcdd2;
 }
 
-/* --- ŰRLAP KONTÉNER --- */
+/* Űrlap konténer - a div#content stílusát követve */
 #InputArea {
     background-color: #ffffff;
     padding: 30px;
@@ -49,9 +48,10 @@
     display: block;
     font-weight: 600;
     font-size: 0.85em;
-    color: #2c3e50;
+    color: #2c3e50; /* Sötétkék a nav-hoz hasonlóan */
     margin-bottom: 8px;
     text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 #InputArea input {
@@ -61,34 +61,38 @@
     border: 1px solid #ddd;
     border-radius: 10px;
     font-size: 1em;
-    background-color: #fdfbfb;
-    transition: all 0.3s;
+    background-color: #fdfbfb; /* A header gradienséből vett világos szín */
+    transition: border-color 0.3s, box-shadow 0.3s;
+    box-sizing: border-box;
 }
 
 #InputArea input:focus {
     border-color: #3498db;
+    background-color: #ffffff;
     outline: none;
     box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
 }
 
-/* --- FŐ GOMBOK (Save, Clear) --- */
+/* Gombok - a nav és a hover stílusok alapján */
 #SaveButton, #ResetButton {
-    padding: 10px 22px;
+    padding: 12px 25px;
     border-radius: 10px;
     border: none;
     cursor: pointer;
     font-weight: 600;
-    transition: all 0.3s;
+    font-size: 0.95em;
+    transition: all 0.3s ease;
 }
 
 #SaveButton {
-    background-color: #2c3e50;
+    background-color: #3498db;
     color: #ffffff;
+    box-shadow: 0 4px 10px rgba(52, 152, 219, 0.2);
 }
 
 #SaveButton:hover {
-    background-color: #3498db;
-    transform: translateY(-1px);
+    background-color: #2980b9;
+    transform: scale(1.03);
 }
 
 #ResetButton {
@@ -97,30 +101,12 @@
     margin-left: 10px;
 }
 
-/* --- TÁBLÁZAT FELETTI "ÖSSZES" GOMB --- */
-.table-header-actions {
-    width: 90%;
-    margin: 0 auto 10px auto;
-    display: flex;
-    justify-content: flex-end;
+#ResetButton:hover {
+    background-color: #7f8c8d;
+    transform: scale(1.03);
 }
 
-#LoadAll {
-    background-color: #2c3e50;
-    color: white;
-    padding: 8px 20px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-weight: 600;
-    transition: 0.3s;
-}
-
-#LoadAll:hover {
-    background-color: #3498db;
-}
-
-/* --- TÁBLÁZAT ÉS MŰVELET GOMBOK --- */
+/* Táblázat - lekerekítve és árnyékolva, mint a content */
 #crud table {
     width: 90%;
     margin: 0 auto;
@@ -133,42 +119,33 @@
     overflow: hidden;
 }
 
+/* Táblázat fejléce - a nav sötétkék színével */
 #crud thead {
     background-color: #2c3e50;
-    color: #ffffff;
+    color: #ecf0f1;
 }
 
-#crud th, #crud td {
-    padding: 15px;
+#crud th {
+    padding: 18px 20px;
     text-align: center;
+    text-transform: uppercase;
+    font-size: 0.85em;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+/* Táblázat cellák */
+#OutputArea td {
+    text-align: center;
+    padding: 15px 20px;
+    color: #333;
     border-bottom: 1px solid #eee;
 }
 
-/* Narancs "Change" gomb */
-.btn-change {
-    background-color: #f39c12;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-right: 5px;
-    font-weight: 600;
-    transition: 0.3s;
+#OutputArea tr:last-child td {
+    border-bottom: none;
 }
 
-.btn-change:hover { background-color: #e67e22; transform: scale(1.05); }
-
-/* Piros "Delete" gomb */
-.btn-delete {
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: 0.3s;
+#OutputArea tr:hover {
+    background-color: #f8f9fa; /* Finom szürke kiemelés hoverre */
 }
-
-.btn-delete:hover { background-color: #c0392b; transform: scale(1.05); }
