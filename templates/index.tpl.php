@@ -18,28 +18,34 @@
 		<?php if(isset($_SESSION['csn']) && isset($_SESSION['un'])) { ?>Bejlentkezve: <strong><?= $_SESSION['csn']." ".$_SESSION['un']." (".$_SESSION['login'].")" ?></strong><?php } ?>
 	</header>
     <div id="wrapper">
-            <nav>
-                <ul>
-					<?php foreach ($oldalak as $url => $oldal): ?>
-						<?php if((isset($_SESSION['login']) && $oldal['menun']['fiok'] || ! isset($_SESSION['login']) && $oldal['menun']['vendeg']) && !$oldal['kiemelt']): ?>
-							<li<?= (($oldal == $keres) ? ' class="active"' : '') ?>>
-							<a href="<?= ($url == '/') ? '.' : $url ?>">
-							<?= $oldal['szoveg'] ?></a>
-							</li>
-						<?php endif; ?>
-					<?php endforeach; ?>
-                </ul>
-				<ul>
-					<?php foreach ($oldalak as $url => $oldal): ?>
-						<?php if((isset($_SESSION['login']) && $oldal['menun']['fiok'] || ! isset($_SESSION['login']) && $oldal['menun']['vendeg']) && $oldal['kiemelt']): ?>
-							<li<?= (($oldal == $keres) ? ' class="active"' : '') ?>>
-							<a href="<?= ($url == '/') ? '.' : $url ?>">
-							<?= $oldal['szoveg'] ?></a>
-							</li>
-						<?php endif; ?>
-					<?php endforeach; ?>
-				</ul>
-            </nav>
+        <nav>
+    		<div class="hamburger" id="hamburger">
+        		<span></span>
+        		<span></span>
+        		<span></span>
+    		</div>
+
+    		<div class="nav-container" id="nav-links">
+        		<ul>
+            		<?php foreach ($oldalak as $url => $oldal): ?>
+                		<?php if((isset($_SESSION['login']) && $oldal['menun']['fiok'] || ! isset($_SESSION['login']) && $oldal['menun']['vendeg']) && !$oldal['kiemelt']): ?>
+                    		<li<?= (($oldal == $keres) ? ' class="active"' : '') ?>>
+                       			<a href="<?= ($url == '/') ? '.' : $url ?>"><?= $oldal['szoveg'] ?></a>
+                   			</li>
+               		 <?php endif; ?>
+           		 <?php endforeach; ?>
+        		</ul>
+       		 <ul>
+           		 <?php foreach ($oldalak as $url => $oldal): ?>
+              		 <?php if((isset($_SESSION['login']) && $oldal['menun']['fiok'] || ! isset($_SESSION['login']) && $oldal['menun']['vendeg']) && $oldal['kiemelt']): ?>
+                   		<li<?= (($oldal == $keres) ? ' class="active"' : '') ?>>
+                       		<a href="<?= ($url == '/') ? '.' : $url ?>"><?= $oldal['szoveg'] ?></a>
+                   		</li>
+                		<?php endif; ?>
+            		<?php endforeach; ?>
+        		</ul>
+    		</div>
+		</nav>
         <div id="content">
             <?php include("./templates/pages/{$keres['fajl']}.tpl.php"); ?>
         </div>
@@ -55,5 +61,23 @@
 			<p>A készítették: <?= $lablec['keltezes']?></p>
 		<?php endif; ?>
     </footer>
+
+
+	<script>
+    	const hamburger = document.getElementById('hamburger');
+    	const navLinks = document.getElementById('nav-links');
+
+    	hamburger.addEventListener('click', () => {
+        	// Kapcsolgatja az 'active' osztályt a listán
+        	navLinks.classList.toggle('active');
+    	});
+
+    	// Ha rákattintanak egy menüpontra, záródjon be a menü
+    	document.querySelectorAll('.nav-container a').forEach(link => {
+        	link.addEventListener('click', () => {
+            	navLinks.classList.remove('active');
+        	});
+    	});
+	</script>
 </body>
 </html>

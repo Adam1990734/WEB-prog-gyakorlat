@@ -5,17 +5,15 @@
     margin: 25px 0;
 }
 
-/* Galéria rács elrendezése */
 #Output {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 25px;
     padding: 20px;
-    max-width: 1400px; /* Kicsit szélesebb, hogy jobban kitöltse a wrapper-t */
+    max-width: 1400px;
     margin: 0 auto;
 }
 
-/* Egyedi képkártyák - a div#content stílusa alapján */
 #Output > div {
     padding: 15px;
     background: #ffffff;
@@ -34,7 +32,7 @@
     height: auto;
     object-fit: cover;
     display: block;
-    border-radius: 8px; /* Belső kerekítés a képnek */
+    border-radius: 8px;
     transition: transform 0.35s ease;
 }
 
@@ -47,7 +45,6 @@
     transition: color 0.3s;
 }
 
-/* Hover effektusok - a kért stílusú skálázással és emeléssel */
 #Output > div:hover {
     transform: translateY(-6px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
@@ -55,65 +52,103 @@
 }
 
 #Output > div:hover img {
-    transform: scale(1.05); /* Ugyanaz a mérték, mint a header képnél */
+    transform: scale(1.05);
 }
 
 #Output > div:hover p {
     color: #3498db;
 }
 
-/* Feltöltő form stílusa */
 #kepek form {
-    max-width: 450px;
+    max-width: 500px;
     margin: 30px auto;
+    padding: 40px 20px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    border: 2px dashed #3498db;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
-    padding: 20px;
-    background-color: #fdfbfb; /* Világos gradiens alap */
-    border-radius: 12px;
-    border: 1px solid #eee;
-}
-
-/* Fájlválasztó mező */
-#Image {
-    width: 100%;
-    max-width: 300px;
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    background-color: #ffffff;
-    font-size: 0.9em;
-}
-
-/* Gombok - egységesítve a mentés gombbal és a nav stílusával */
-#Submitbutton, #Loader {
-    padding: 12px 28px;
-    border-radius: 10px;
-    border: none;
-    background-color: #3498db;
-    color: #ffffff;
-    font-weight: 600;
-    font-size: 15px;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(52, 152, 219, 0.2);
     transition: all 0.3s ease;
+}
+
+#kepek form:hover {
+    border-color: #2c3e50;
+    background-color: #f9fbff;
+}
+
+#Image {
+    display: none;
+}
+
+.custom-file-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    width: 100%;
+}
+
+.upload-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+#fileName {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 1.1em;
+    text-align: center;
+}
+
+.file-hint {
+    font-size: 0.8em;
+    color: #7f8c8d;
+    margin-top: 5px;
+}
+
+#ResponseArea {
+    max-width: 500px;
+    margin: 10px auto;
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+#ResponseArea:not(:empty) {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+
+#Submitbutton, #Loader {
+    align-self: flex-start;
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    padding: 10px 22px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.2s, transform 0.2s;
     display: block;
     margin: 10px auto;
 }
 
 #Submitbutton:hover, #Loader:hover {
-    background-color: #2c3e50; /* Sötétkék váltás hoverre, mint a nav-nál */
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    background-color: #3498db;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transform: translateY(-1px);
 }
 
 #Submitbutton:active, #Loader:active {
     transform: translateY(0);
 }
 
-/* Felhasználónév szigorúan rejtve */
 #Username {
     display: none !important;
 }
