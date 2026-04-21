@@ -11,11 +11,23 @@ const LoadAll = document.getElementById("LoadAll");//Mind betöltés
 const ServerApi = "./logicals/crudhandler.php";
 
 //================================== Fetch rendszer ========================================
+let LimitLoadingMode = true;
 
 const SelectedInventor = {
     Id: null,
     isEdit: false
 };
+
+/**@param {{Name: String, Born: String | Number, Died: String | Number}} Input  */
+function IsValid(Input) {
+    const NameRegex = /^([A-ZÁÉÍÓÖŐÚÜŰ][a-záéíóöőúüű]+)(\s[A-ZÁÉÍÓÖŐÚÜŰ][a-záéíóöőúüű]+)+$/;
+    if(Input.Name == "" || !NameRegex.test(Input.Name))
+        throw new Error("Nem megfelelő név formátum!");
+    if(Input.Born == "" || !Number.isInteger(parseInt(Input.Born)))
+        throw new Error("Nem megfelelő születési dátum formátum!");
+    if(Input.Died != "" && !Number.isInteger(parseInt(Input.Died)))
+        throw new Error("Nem megfelelő halálozási dátum formátum!");
+}
 
 function ReadUserInput() {
     const InputStreamData = {
@@ -89,9 +101,12 @@ function ReadFirstFewInventor() {
             //Adatok betöltése:
             OutputElement.innerHTML = "";
             Payload.Records.forEach(Record => {OutputElement.appendChild(CreateRow(Record));});
-            ResponsElement.innerHTML += "The inventors are succesfully loaded!<br>";
         }
     })
+    .catch(Err => {
+        ResponsElement.innerHTML += "Hiba: Sikeretelen adatbetöltés!<br>";
+        console.log("Read: " + Err.message);
+    });
 }
 
 function ReadInventors() {
@@ -106,11 +121,10 @@ function ReadInventors() {
             //Adatok betöltése:
             OutputElement.innerHTML = "";
             Payload.Records.forEach(Record => {OutputElement.appendChild(CreateRow(Record));});
-            ResponsElement.innerHTML += "The inventors are succesfully loaded!<br>";
         }
     })
     .catch(Err => {
-        ResponsElement.innerHTML += "Error: Cannot load the inventors!<br>";
+        ResponsElement.innerHTML += "Hiba: Sikeretelen adatbetöltés!<br>";
         console.log("Read: " + Err.message);
     });
 }
@@ -126,12 +140,14 @@ function CreateInventor(Record = {Name: "", Born: 0, Died: 0}) {
         if(Payload.Fail)
             throw new Error("Cannot save Inventor!");
         else {
-            ResponsElement.innerHTML += "The new inventor is succesfully saved!<br>";
-            ReadFirstFewInventor();
+            ResponsElement.innerHTML += "Sikeres adat rögzítés!<br>";
+            if(LimitLoadingMode)
+                ReadFirstFewInventor();
+            else ReadInventors();
         }
     })
     .catch(Err => {
-        ResponsElement.innerHTML = "Error: Cannot save the new inventor!<br>";
+        ResponsElement.innerHTML = "Hiba: Sikertelen adat rögzítés!<br>";
         console.log("Create: " + Err.message);
     });
 }
@@ -148,21 +164,23 @@ function DeleteInventor(Id) {
         if(Payload.Fail)
             throw new Error("Cannot delete the selected record!");
         else {
-            ResponsElement.innerHTML += "The selected inventor is succesfully deleted!<br>";
-            ReadFirstFewInventor();
+            ResponsElement.innerHTML += "A kiválasztott eleme sikeres törlése!<br>";
+            if(LimitLoadingMode)
+                ReadFirstFewInventor();
+            else ReadInventors();
         }
     })
     .catch(Err => {
-        ResponsElement.innerHTML = "Error: Cannot delete the selected inventor!<br>";
+        ResponsElement.innerHTML = "Hiba: A kiválasztott eleme sikertelen törlése!<br>";
         console.log("Delete: " + Err.message);
     });
     ResponsElement.innerHTML = "";
 }
 
-function UpdateInventor(Id) {
+function UpdateInventor(Id, ToThis) {
     const UpdateToThis = {
         Id: Id,
-        ToThis: ReadUserInput()
+        ToThis: ToThis
     };
     fetch(ServerApi, {
         method: "PUT",
@@ -174,12 +192,14 @@ function UpdateInventor(Id) {
         if(Payload.Fail)
             throw new Error("Cannot update the selected record!");
         else {
-            ResponsElement.innerHTML += "The selected inventor is succesfully updated!<br>";
-            ReadFirstFewInventor();
+            ResponsElement.innerHTML += "A kiválasztott eleme sikeres frissítése!<br>";
+            if(LimitLoadingMode)
+                ReadFirstFewInventor();
+            else ReadInventors();
         }
     })
     .catch(Err => {
-        ResponsElement.innerHTML = "Error: Cannot update the selected inventor!<br>";
+        ResponsElement.innerHTML = "Hiba: A kiválasztott eleme sikertelen frissítése!<br>";
         console.log("Update: " + Err.message);
     });
 }
@@ -194,21 +214,35 @@ SaveButton.addEventListener("click", (e) => {
     ResponsElement.style.marginBottom = "20px";
     ResponsElement.style.borderRadius = "5px";
 
+    ResponsElement.innerHTML = "";
+
+    const InputValues = ReadUserInput();
+    try { IsValid(InputValues); }
+    catch(Err) { ResponsElement.innerHTML = Err.message; return; }
+
     if(SelectedInventor.isEdit)
-        UpdateInventor(SelectedInventor.Id);
+        UpdateInventor(SelectedInventor.Id, InputValues);
     else 
-        CreateInventor(ReadUserInput());
+        CreateInventor(InputValues);
 
     // Input elemek nullázása:
     Object.entries(InputElements).forEach(([key, elem]) => elem.value = "");
+
     SelectedInventor.Id = null;
     SelectedInventor.isEdit = false;
-
-    //Vissza jelzés ürítése
-    ResponsElement.innerHTML = "";
 });
 
-LoadAll.addEventListener("click", ReadInventors);
+LoadAll.addEventListener("click", () => {
+    LimitLoadingMode = !LimitLoadingMode;
+    if(LimitLoadingMode) {
+        LoadAll.innerText = "Néhány";
+        ReadInventors();
+    }
+    else {
+        LoadAll.innerText = "Összes";
+        ReadFirstFewInventor();
+    }
+});
 
 ResetButton.addEventListener("reset", () => {
     SelectedInventor.Id = null;

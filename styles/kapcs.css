@@ -1,87 +1,74 @@
 #kapcs {
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #333;
     max-width: 1000px;
     margin: 20px auto;
     padding: 20px;
-    overflow: hidden;
+
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+
+    /* layout */
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 30px;
+}
+
+/* címek teljes szélesség */
+#kapcs h2,
+#kapcs h3 {
+    grid-column: 1 / -1;
 }
 
 #kapcs h2 {
-    margin: 0 0 10px 0;
+    margin: 0 0 10px;
     padding-bottom: 10px;
     color: #2c3e50;
     border-bottom: 2px solid #3498db;
 }
 
 #kapcs h3 {
-    margin: 10px 0 25px 0;
+    margin: 10px 0 25px;
     min-height: 1.5em;
     font-weight: 500;
     color: #3498db;
 }
 
-#kapcs aside {
-    float: right;
-    width: 320px;
-    margin-left: 30px;
-
-    display: flex;
-    gap: 15px;
-    align-items: flex-start;
-
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 12px;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-}
-
-#kapcs aside img {
-    width: 110px;
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    flex-shrink: 0;
-}
-
-#kapcs aside p {
-    margin: 0;
-    line-height: 1.6;
-    color: #555;
-    font-size: 0.95rem;
-}
-
+/* FORM */
 #kapcs form {
     background-color: #ffffff;
     padding: 25px;
     border-radius: 12px;
     border: 1px solid #e0e0e0;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-#ResponseArea {
+/* TEXTAREA */
+#kapcs #ResponseArea {
     width: 100%;
     min-height: 160px;
     padding: 12px;
     border-radius: 10px;
     border: 1px solid #ccc;
     font-size: 1rem;
-    resize: vertical;
-    box-sizing: border-box; /* Hogy a padding ne nyomja ki a szélességet */
-    transition: border 0.3s, box-shadow 0.3s;
     font-family: inherit;
+    resize: vertical;
+    box-sizing: border-box;
+    transition: border 0.3s, box-shadow 0.3s;
 }
 
-#ResponseArea:focus {
+#kapcs #ResponseArea:focus {
     outline: none;
     border-color: #3498db;
     box-shadow: 0 0 0 3px rgba(52,152,219,0.15);
 }
 
-#ResponseSubmit {
+/* BUTTON */
+#kapcs #ResponseSubmit {
+    align-self: flex-start;
     background-color: #2c3e50;
     color: #ecf0f1;
     padding: 10px 22px;
@@ -93,12 +80,109 @@
     transition: background 0.3s, box-shadow 0.2s, transform 0.2s;
 }
 
-#ResponseSubmit:hover {
+#kapcs #ResponseSubmit:hover {
     background-color: #3498db;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     transform: translateY(-1px);
 }
 
-#Username {
-    display: none !important;
+#kapcs aside {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    text-align: left;
+}
+
+#kapcs aside img {
+    width: 100%;
+    max-width: 180px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+#kapcs aside p {
+    margin: 0;
+    line-height: 1.6;
+    color: #555;
+    font-size: 0.95rem;
+}
+
+#kapcs article {
+    grid-column: 1 / -1;
+    margin-top: 20px;
+    line-height: 1.7;
+    color: #444;
+}
+
+#Output {
+    display: none;
+}
+
+/* =========================
+   TABLET (<= 900px)
+========================= */
+@media (max-width: 900px) {
+    #kapcs {
+        grid-template-columns: 1fr 260px;
+        gap: 20px;
+    }
+
+    #kapcs aside img {
+        max-width: 160px;
+    }
+}
+
+/* =========================
+   MOBIL (<= 600px)
+========================= */
+@media (max-width: 600px) {
+    #kapcs {
+        grid-template-columns: 1fr;
+    }
+
+    /* minden elem teljes szélesség */
+    #kapcs h2,
+    #kapcs h3,
+    #kapcs form,
+    #kapcs aside,
+    #kapcs article {
+        grid-column: 1 / -1;
+    }
+
+    #kapcs aside {
+        margin-top: 10px;
+    }
+
+    #kapcs #ResponseSubmit {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* =========================
+   KIS MOBIL (<= 400px)
+========================= */
+@media (max-width: 400px) {
+    #kapcs {
+        padding: 15px;
+    }
+
+    #kapcs aside img {
+        max-width: 140px;
+    }
+
+    #kapcs h2 {
+        font-size: 1.3rem;
+    }
+
+    #kapcs h3 {
+        font-size: 1rem;
+    }
 }
