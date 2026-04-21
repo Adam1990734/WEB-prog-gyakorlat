@@ -50,7 +50,11 @@ function LoadAllPictures() {
     fetch(Api+"?limit=0")
     .then(Resp => Resp.json())
     .then(Data => {
-        if(Data.Fail) UserResponse.innerHTML = "Hiba a képek betöltésekor!";
+        if(Data.Fail) {
+            if(Data.hasOwnProperty("Message"))
+                UserResponse.innerHTML = Data.Message;
+            else UserResponse.innerHTML = "Hiba a képek betöltésekor!";
+        }
         else {
             /**@type {Array} */
             const DataSet = Data['DataList'];
@@ -64,7 +68,11 @@ function LoadFirstFewPictures() {
     fetch(Api)
     .then(Resp => Resp.json())
     .then(Data => {
-        if(Data.Fail) UserResponse.innerHTML = "Hiba a képek betöltésekor!";
+        if(Data.Fail) {
+            if(Data.hasOwnProperty("Message"))
+                UserResponse.innerHTML = Data.Message;
+            else UserResponse.innerHTML = "Hiba a képek betöltésekor!";
+        }
         else {
             /**@type {Array} */
             const DataSet = Data['DataList'];
