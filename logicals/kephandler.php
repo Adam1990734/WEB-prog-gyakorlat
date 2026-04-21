@@ -59,6 +59,13 @@
                 echo json_encode(["Fail" => true]);
                 break;
             }
+            if($_POST['felhasznalo'] == 'vendég') {
+                echo json_encode([
+                    "Fail" => true,
+                    "Message" => "Nem engedélyezett felhasználó"
+                ]);
+                break;
+            }
             $PictureDataSet = [
                 'Name' => substr($_FILES['kep']['name'], 0, strrpos($_FILES['kep']['name'], ".")),
                 'Type' => mime_content_type($_FILES['kep']['tmp_name']),
