@@ -1,23 +1,25 @@
-  <form action="belep" method="post">
-    <fieldset>
-      <legend>Bejlentkezés</legend>
-      <br>
-      <input type="text" value="<?= (isset($_SESSION['login']) && !empty($_SESSION['login'])) ? $_SESSION['login'] : "" ?>" name="felhasznalo" placeholder="felhasználó" required><br><br>
-      <input type="password" name="jelszo" placeholder="jelszó" required><br><br>
-      <input type="submit" name="belepes" value="Belépés">
-      <br>&nbsp;
-    </fieldset>
-  </form>
-  <h3>Regisztrálja magát, ha még nem felhasználó!</h2>
-    <form action="regisztral" method="post">
-      <fieldset>
-        <legend>Regisztráció</legend>
-        <br>
-        <input type="text" name="vezeteknev" placeholder="vezetéknév" required><br><br>
-        <input type="text" name="utonev" placeholder="utónév" required><br><br>
-        <input type="text" name="felhasznalo" placeholder="felhasználói név" required><br><br>
-        <input type="password" name="jelszo" placeholder="jelszó" required><br><br>
-        <input type="submit" name="regisztracio" value="Regisztráció">
-        <br>&nbsp;
-      </fieldset>
-    </form>
+<h3 id="Output" style="display: none;"></h3>
+<form action="belep" method="post" id="belepes">
+  <fieldset>
+    <legend>Bejlentkezés</legend>
+    <br>
+    <input type="text" id="LoginUser" value="<?= (isset($_SESSION['login']) && !empty($_SESSION['login'])) ? $_SESSION['login'] : "" ?>" name="felhasznalo" placeholder="felhasználó" required><br><br>
+    <input type="password" id="LoginPass" name="jelszo" placeholder="jelszó" required><br><br>
+    <input type="submit" name="belepes" value="Belépés">
+    <br>&nbsp;
+  </fieldset>
+</form>
+<h3>Regisztrálja magát, ha még nem felhasználó!</h2>
+<form action="regisztral" method="post" id="regisztracio">
+  <fieldset>
+    <legend>Regisztráció</legend>
+    <br>
+    <input type="text" id="LastName" name="vezeteknev" placeholder="vezetéknév" required><br><br>
+    <input type="text" id="FirstName" name="utonev" placeholder="utónév" required><br><br>
+    <input type="text" id="UserName" name="felhasznalo" placeholder="felhasználói név" required><br><br>
+    <input type="password" id="Password" name="jelszo" placeholder="jelszó" required><br><br>
+    <input type="submit" name="regisztracio" value="Regisztráció">
+    <br>&nbsp;
+  </fieldset>
+</form>
+<script src="./scripts/belep.js"></script>

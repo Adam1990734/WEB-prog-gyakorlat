@@ -53,6 +53,21 @@
             throw new Exception($e->getMessage());
         }
     }
+
+    //Inventorra mintázva
+    function IsValid($Inventor) {
+        if(!isset($Inventor) || empty($Inventor))
+            return false;
+        if(!isset($Inventor["Name"])
+            || empty($Inventor["Name"])
+            || preg_match('/^([A-ZÁÉÍÓÖŐÚÜŰ][a-záéíóöőúüű]+)(\s[A-ZÁÉÍÓÖŐÚÜŰ][a-záéíóöőúüű]+)+$/', $Inventor["Name"]) !== 1
+        ) return false;
+        if(!isset($Inventor["Born"]) || !is_numeric($Inventor["Born"]) || empty($Inventor["Born"]))
+            return false;
+        if(!isset($Inventor["Died"]) || (!is_numeric($Inventor["Died"]) && !empty($Inventor["Died"])))
+            return false;
+        return true;
+    }
     
     /*Methode szerint feldolgozás
       - GET ===> READ kérelem
@@ -85,6 +100,10 @@
         case "POST":
             try {
                 $Data = json_decode(file_get_contents("php://input"), true);
+                if(!IsValid($Data))
+                    echo json_encode([
+                        "Fail" => true
+                    ]);
                 CreateInventor($Data);
                 echo json_encode([
                     "Fail" => false
@@ -98,6 +117,10 @@
         case "PUT":
             try {
                 $Data = json_decode(file_get_contents("php://input"), true);
+                if(!IsValid($Data["ToThis"]))
+                    echo json_encode([
+                        "Fail" => true
+                    ]);
                 UpdateInventor($Data["Id"], $Data["ToThis"]);
                 echo json_encode([
                     "Fail" => false

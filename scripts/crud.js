@@ -240,12 +240,16 @@ SaveButton.addEventListener("click", (e) => {
 LoadAll.addEventListener("click", () => {
     LimitLoadingMode = !LimitLoadingMode;
     if (LimitLoadingMode) {
-        LoadAll.innerText = "Néhány";
-        ReadInventors();
-    }
-    else {
         LoadAll.innerText = "Összes";
         ReadFirstFewInventor();
+    }
+    else {
+        if(!confirm("Biztos vagy benne?"))  {
+            LimitLoadingMode = true;
+            return;
+        }
+        LoadAll.innerText = "Néhány";
+        ReadInventors();
     }
 });
 

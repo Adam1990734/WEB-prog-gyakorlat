@@ -1,7 +1,14 @@
 <?php
 //Itt annyit változtattam hogy nincs id kiírás mert nem látom értelmét csak tesztre max
 //Emelett csináltam flag változtatásokat és felesleges változókat kiszedtem így egszerűsítettem.
-if(isset($_POST['felhasznalo']) && isset($_POST['jelszo']) && isset($_POST['vezeteknev']) && isset($_POST['utonev'])) {
+if(
+    isset($_POST['felhasznalo']) &&
+    isset($_POST['jelszo']) &&
+    isset($_POST['vezeteknev']) &&
+    isset($_POST['utonev']) &&
+    preg_match('/^[A-Z][a-z]+$/', $_POST['vezeteknev']) === 1 && 
+    preg_match('/^[A-Z][a-z]+$/', $_POST['utonev']) === 1
+) {
     try {
         // Kapcsolódás
         $dbh = new PDO('mysql:host=localhost;dbname=bejelentkezes', 'root', '',
@@ -38,5 +45,5 @@ if(isset($_POST['felhasznalo']) && isset($_POST['jelszo']) && isset($_POST['veze
         $ujra = true;
     }      
 }
-else header("Location: .");
+else header("Location: ./belepes");
 ?>

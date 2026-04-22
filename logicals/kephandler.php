@@ -55,7 +55,7 @@
         case "POST":
             //                    a kép ellenőrzése                                                      a felhasználó ellenőrzése
             if((!isset($_FILES['kep']['name']) || empty($_FILES['kep']['name'])) || !isset($_POST['felhasznalo']) || empty($_POST['felhasznalo'])) {
-                file_put_contents("./debug.log", 'Hiba POST-nál', FILE_APPEND);
+                //file_put_contents("./debug.log", 'Hiba POST-nál', FILE_APPEND);
                 echo json_encode(["Fail" => true]);
                 break;
             }
