@@ -28,17 +28,15 @@ function ReadInput() {
 
 function CreateCard(ImgName, ImgType, ImgSource) {
     const Card = document.createElement("div");
-    Card.className = "kepek";
+    Card.className = "CardImage";
 
     const Img = document.createElement("img");
-    Img.className = "kepek";
     Img.src = "data:" + ImgType + ";base64," + ImgSource;
     Img.alt = "Egy betöltött kép";
 
     Card.appendChild(Img);
     
     const Paragraph = document.createElement("p");
-    Paragraph.className = "kepek";
     Paragraph.innerHTML = ImgName;
     
     Card.appendChild(Paragraph);
@@ -59,6 +57,13 @@ function LoadAllPictures() {
             /**@type {Array} */
             const DataSet = Data['DataList'];
             DataSet.forEach(Picture => Output.appendChild(CreateCard(Picture['nev'], Picture['tipus'], Picture['kep'])));
+            document.querySelectorAll(".CardImage").forEach(Card => {
+                Card.addEventListener("click", () => {
+                    localStorage.setItem("ImageName", Card.querySelector("p").innerText);
+                    localStorage.setItem("ImageData", Card.querySelector("img").src);
+                    window.open("./templates/nagyitottkep.php", "_blank");
+                });
+            });
         }
     })
     .catch(Err => console.log(Err.message));
@@ -77,6 +82,13 @@ function LoadFirstFewPictures() {
             /**@type {Array} */
             const DataSet = Data['DataList'];
             DataSet.forEach(Picture => Output.appendChild(CreateCard(Picture['nev'], Picture['tipus'], Picture['kep'])));
+            document.querySelectorAll(".CardImage").forEach(Card => {
+                Card.addEventListener("click", () => {
+                    localStorage.setItem("ImageName", Card.querySelector("p").innerText);
+                    localStorage.setItem("ImageData", Card.querySelector("img").src);
+                    window.open("./templates/nagyitottkep.php", "_blank");
+                });
+            });
         }
     })
     .catch(Err => console.log(Err.message));
@@ -99,7 +111,11 @@ Submit.addEventListener("click", (e) => {
     })
     .then(Resp => Resp.json())
     .then(Data => {
-        if(Data.Fail) UserResponse.innerHTML = "Hiba a kép feltöltéskor!";
+        if(Data.Fail) {
+            if(Data.hasOwnProperty("Message"))
+                UserResponse.innerHTML = Data.Message;
+            else UserResponse.innerHTML = "Hiba a képek betöltésekor!";
+        }
         else UserResponse.innerHTML = "Sikeres kép felötlés!";
         LoadAllPictures();
     })
@@ -125,7 +141,7 @@ InputElements.Image.addEventListener("change", function() {
     const fileNameDisplay = document.getElementById("fileName");
     if (this.files && this.files.length > 0) {
         fileNameDisplay.innerHTML = "Kiválasztott fájl: " + this.files[0].name;
-        fileNameDisplay.style.color = "#3498db"; // Kékre vált, ha van fájl
+        fileNameDisplay.style.color = "#3498db";
     } else {
         fileNameDisplay.innerHTML = "Kattints a kép kiválasztásához";
         fileNameDisplay.style.color = "#2c3e50";

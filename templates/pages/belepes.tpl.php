@@ -3,7 +3,11 @@
   <fieldset>
     <legend>Bejlentkezés</legend>
     <br>
-    <input type="text" id="LoginUser" value="<?= (isset($_SESSION['login']) && !empty($_SESSION['login'])) ? $_SESSION['login'] : "" ?>" name="felhasznalo" placeholder="felhasználó" required><br><br>
+    <input type="text" id="LoginUser"
+      <?php if(isset($_SESSION['lastusername']) && !empty($_SESSION['lastusername'])): ?>
+        value="<?= $_SESSION['lastusername'] ?>"
+      <?php endif; ?>
+      name="felhasznalo" placeholder="felhasználó" required><br><br>
     <input type="password" id="LoginPass" name="jelszo" placeholder="jelszó" required><br><br>
     <input type="submit" name="belepes" value="Belépés">
     <br>&nbsp;

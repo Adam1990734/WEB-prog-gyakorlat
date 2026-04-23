@@ -31,8 +31,12 @@ function SendInput(Response) {
     })
     .then(Resp => Resp.json())
     .then(Data => {
+        console.log(Data);
         if(Data.Fail) Output.innerHTML = "A vissza jelzését nem sikerült rögzíteni!";
-        else Output.innerHTML = "Sikeres üzenet rögzítés!";
+        else {
+            Output.style.display = "block";
+            Output.innerHTML = "Sikeres üzenet rögzítés!";
+        }
     })
     .catch(err => console.log(err.message));
 }
@@ -44,6 +48,7 @@ SubmitButton.addEventListener("click", (e) => {
     try {
         InputData = ReadUserInput();
     } catch(err) {
+        Output.style.display = "block";
         Output.innerHTML = "Sikeretelen üzenet küldés!";
         console.log("Sikertelen üzenet küldés: " + err.message);
     }

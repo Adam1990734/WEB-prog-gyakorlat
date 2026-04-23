@@ -14,8 +14,9 @@ if(isset($_POST['felhasznalo']) && isset($_POST['jelszo']) && !empty($_POST['fel
         if($row) {
             $_SESSION['csn'] = $row['csaladi_nev'];
             $_SESSION['un'] = $row['uto_nev'];
+            $_SESSION['login'] = $_POST['felhasznalo'];
         }
-        $_SESSION['login'] = $_POST['felhasznalo'];
+        $_SESSION['lastusername'] = $_POST['felhasznalo'];
     }
     catch (PDOException $e) {
         $errormessage = "Hiba: Váratlan hiba feldolgozás során.";
