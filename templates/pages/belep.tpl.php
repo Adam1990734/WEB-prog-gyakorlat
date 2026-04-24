@@ -8,6 +8,6 @@
         <a href="belepes" >Próbálja újra!</a>
     <?php endif; ?>
 <?php endif; ?>
-<?php if(isset($errormessage)): ?>
+<?php if(isset($errormessage)) { ?>
     <h2><?= $errormessage ?></h2>
-<?php endif; ?>
+<?php } ?>

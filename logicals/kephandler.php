@@ -23,17 +23,59 @@
         }
     }
 
-    function ReadPictures($Limitation = 10) {
+    function ReadPictures($Username = "", $Limitation = 10) {
         global $LoggingData;
         try {
             $SQLstmnt = null;
-            if($Limitation === 0) $SQLstmnt = $LoggingData->query("SELECT kep_nev nev, kep_tipus tipus, kep
+            if(!isset($Username) || empty($Username) || $Username === 'vendég') {
+                if($Limitation === 0) $SQLstmnt = $LoggingData->query("SELECT kep_nev nev, kep_tipus tipus, kep
+                                                                       FROM kepek");
+                else $SQLstmnt = $LoggingData->query("SELECT kep_nev nev, kep_tipus tipus, kep
+                                                      FROM kepek
+                                                      LIMIT ".
+                                                      $Limitation
+                                                    );
+                //Nem volt jobb ötltetem jelenleg hogy legyen ennek a függvénynek az elrendezés ezért ilyen lett (biztos van szebb)
+                $SQLstmnt->execute();
+                $Result = $SQLstmnt->fetchAll();
+                foreach($Result as $key => $value)
+                    $Result[$key]['kep'] = base64_encode($value['kep']);
+                return $Result;
+                return $SQLstmnt->fetchAll();
+            }
+            if($Limitation === 0) $SQLstmnt = $LoggingData->prepare("SELECT id, kep_nev nev, kep_tipus tipus, kep
                                                                    FROM kepek
-                                                                 ");
-            else $SQLstmnt = $LoggingData->query("SELECT kep_nev nev, kep_tipus tipus, kep
+                                                                   WHERE felhaszn_id = (
+                                                                        SELECT id FROM felhasznalok
+                                                                        WHERE bejelentkezes = :felhasznalonev
+                                                                   )
+                                                                   UNION ALL
+                                                                   SELECT NULL, kep_nev nev, kep_tipus tipus, kep
+                                                                   FROM kepek
+                                                                   WHERE NOT felhaszn_id = (
+                                                                        SELECT id FROM felhasznalok
+                                                                        WHERE bejelentkezes = :felhasznalonev
+                                                                   )
+                                                                  ");
+            else $SQLstmnt = $LoggingData->prepare("SELECT id, kep_nev nev, kep_tipus tipus, kep
                                                   FROM kepek
-                                                  LIMIT ".$Limitation."
-                                                 ");
+                                                  WHERE felhaszn_id = (
+                                                        SELECT id FROM felhasznalok
+                                                        WHERE bejelentkezes = :felhasznalonev
+                                                  )
+                                                  UNION ALL
+                                                  SELECT NULL, kep_nev nev, kep_tipus tipus, kep
+                                                  FROM kepek
+                                                  WHERE NOT felhaszn_id = (
+                                                    SELECT id FROM felhasznalok
+                                                    WHERE bejelentkezes = :felhasznalonev
+                                                  )
+                                                  LIMIT "
+                                                  .$Limitation."
+                                                ");
+            $SQLstmnt->execute([
+                'felhasznalonev' => $Username
+            ]);
             $Result = $SQLstmnt->fetchAll();
             foreach($Result as $key => $value)
                 $Result[$key]['kep'] = base64_encode($value['kep']);
@@ -42,10 +84,52 @@
             return [];
         }
     }
+
+    function DeletePicture($Username, $PicId) {
+        if(!isset($PicId) || empty($PicId) || !isset($Username) || empty($Username))
+            return true;//A visszadási értékhez igazodik azért true
+        global $LoggingData;
+        try {
+            $SQLstmnt = $LoggingData->prepare("DELETE FROM kepek
+                                               WHERE id = :kepid
+                                               AND felhaszn_id = (
+                                                    SELECT id
+                                                    FROM felhasznalok
+                                                    WHERE bejelentkezes = :felhasznalonev
+                                             )");
+            $SQLstmnt->execute([
+                'felhasznalonev' => $Username,
+                'kepid' => $PicId
+            ]);
+            return false;
+        } catch(Exception $e) {
+            return true;
+        }
+    }
+
+    //Ez vizsgálja hogy a user max 5 képet tölthet fel (szűkös hely használat miatt csináltam)
+    function NumberOfPic($Username) {
+        if(!isset($Username) && empty($Username))
+            return -1;//-1 lesz a hiba érték
+        global $LoggingData;
+        try {
+            $SQLstmnt =$LoggingData->prepare("SELECT COUNT(*)
+                                               FROM kepek
+                                               WHERE felhaszn_id = (
+                                                    SELECT id
+                                                    FROM felhasznalok
+                                                    WHERE bejelentkezes = ?
+                                               )");
+            $SQLstmnt->execute([$Username]);
+            return $SQLstmnt->fetchColumn();
+        } catch(Exception $e) {
+            return -1;
+        }
+    }
     
     switch($_SERVER["REQUEST_METHOD"]) {
         case "GET":
-            if(empty($GetResult = ReadPictures((empty($_GET) ? 10 : 0))))
+            if(empty($GetResult = ReadPictures((empty($_GET['username']) ? "" : $_GET['username']), (isset($_GET['limit']) ? 0 : 10))))
                 echo json_encode(["Fail" => true]);
             echo json_encode([
                 "Fail" => false,
@@ -66,6 +150,15 @@
                 ]);
                 break;
             }
+            $HasPicNum = NumberOfPic($_POST['felhasznalo']);
+            //file_put_contents("./debug.log", 'A képek száma: '.$HasPicNum."\n", FILE_APPEND);
+            if($HasPicNum >= 5 || NumberOfPic($_POST['felhasznalo']) === -1) {
+                echo json_encode([
+                    "Fail" => true,
+                    "Message" => "A felhasznaló túllépte a megengedett kép számot! (max 5 kép)"
+                ]);
+                break;
+            }
             $PictureDataSet = [
                 'Name' => substr($_FILES['kep']['name'], 0, strrpos($_FILES['kep']['name'], ".")),
                 'Type' => mime_content_type($_FILES['kep']['tmp_name']),
@@ -75,6 +168,18 @@
                 $_POST['felhasznalo'],
                 $PictureDataSet
             )]);
+            break;
+        case "DELETE":
+            $Data = json_decode(file_get_contents("php://input"), true);
+            //file_put_contents("./debug.log", 'A kép száma: '.print_r($Data, true)."\n", FILE_APPEND);
+            //break;
+            if(!isset($Data['felhasznalo']) || empty($Data['felhasznalo']) && !isset($Data['kepid']) || empty($Data['kepid'])) {
+                echo json_encode([ "Fail" => true ]);
+                break;
+            }
+            echo json_encode([
+                "Fail" => DeletePicture($Data['felhasznalo'], $Data['kepid'])
+            ]);
             break;
         default:
             echo json_encode(["Fail" => true]);

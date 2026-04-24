@@ -26,13 +26,41 @@ function ReadInput() {
     };
 }
 
-function CreateCard(ImgName, ImgType, ImgSource) {
+/**@param {Number} Id  */
+function DeletePicture(Id) {
+    if(Id == null || isNaN(Id))
+        throw new Error("Id specifikációs hiba!");
+    fetch(Api, {
+        headers: { "Connection-Type": "application/json" },
+        method: "DELETE",
+        body: JSON.stringify({
+            felhasznalo: InputElements.Username.value,
+            kepid: Id
+        })
+    })
+    .then(Resp => Resp.json())
+    .then(Data => {
+        if(Data.Fail) {
+            if(Data.hasOwnProperty("Message"))
+                UserResponse.innerHTML = Data.Message;
+            else UserResponse.innerHTML = "Hiba a képek törlésekor!";
+        }
+        else {
+            UserResponse.innerHTML = "Sikeres kép törlés!";
+            Output.innerHTML = "";
+            LoadFirstFewPictures();
+        }
+    })
+    .catch(Err => console.log(Err.message));
+}
+
+function CreateCard(ImgName, ImgType, ImgSource, ImgId = null) {
     const Card = document.createElement("div");
-    Card.className = "CardImage";
 
     const Img = document.createElement("img");
     Img.src = "data:" + ImgType + ";base64," + ImgSource;
     Img.alt = "Egy betöltött kép";
+    Img.className = "CardImage";
 
     Card.appendChild(Img);
     
@@ -41,11 +69,18 @@ function CreateCard(ImgName, ImgType, ImgSource) {
     
     Card.appendChild(Paragraph);
 
+    if(ImgId !== null && !isNaN(ImgId)) {
+        const RemoveBtn = document.createElement("button");
+        RemoveBtn.innerHTML = "Törlés";
+        RemoveBtn.addEventListener("click", () => DeletePicture(ImgId));
+        Card.appendChild(RemoveBtn);
+    }
+
     return Card;
 }
 
 function LoadAllPictures() {
-    fetch(Api+"?limit=0")
+    fetch(Api+"?username="+encodeURIComponent(InputElements.Username.value)+"&limit=0")
     .then(Resp => Resp.json())
     .then(Data => {
         if(Data.Fail) {
@@ -56,12 +91,12 @@ function LoadAllPictures() {
         else {
             /**@type {Array} */
             const DataSet = Data['DataList'];
-            DataSet.forEach(Picture => Output.appendChild(CreateCard(Picture['nev'], Picture['tipus'], Picture['kep'])));
+            DataSet.forEach(Picture => Output.appendChild(CreateCard(Picture['nev'], Picture['tipus'], Picture['kep'], Picture.hasOwnProperty("id") ? Picture["id"] : null)));
             document.querySelectorAll(".CardImage").forEach(Card => {
                 Card.addEventListener("click", () => {
-                    localStorage.setItem("ImageName", Card.querySelector("p").innerText);
-                    localStorage.setItem("ImageData", Card.querySelector("img").src);
-                    window.open("./templates/nagyitottkep.php", "_blank");
+                    localStorage.setItem("ImageName", Card.parentElement.querySelector("p").innerText);
+                    localStorage.setItem("ImageData", Card.parentElement.querySelector("img").src);
+                    window.open("./nagyitottkep.php", "_blank");
                 });
             });
         }
@@ -70,7 +105,7 @@ function LoadAllPictures() {
 }
 
 function LoadFirstFewPictures() {
-    fetch(Api)
+    fetch(Api+"?username="+InputElements.Username.value)
     .then(Resp => Resp.json())
     .then(Data => {
         if(Data.Fail) {
@@ -81,12 +116,12 @@ function LoadFirstFewPictures() {
         else {
             /**@type {Array} */
             const DataSet = Data['DataList'];
-            DataSet.forEach(Picture => Output.appendChild(CreateCard(Picture['nev'], Picture['tipus'], Picture['kep'])));
+            DataSet.forEach(Picture => Output.appendChild(CreateCard(Picture['nev'], Picture['tipus'], Picture['kep'], Picture.hasOwnProperty("id") ? Picture["id"] : null)));
             document.querySelectorAll(".CardImage").forEach(Card => {
                 Card.addEventListener("click", () => {
-                    localStorage.setItem("ImageName", Card.querySelector("p").innerText);
-                    localStorage.setItem("ImageData", Card.querySelector("img").src);
-                    window.open("./templates/nagyitottkep.php", "_blank");
+                    localStorage.setItem("ImageName", Card.parentElement.querySelector("p").innerText);
+                    localStorage.setItem("ImageData", Card.parentElement.querySelector("img").src);
+                    window.open("./nagyitottkep.php", "_blank");
                 });
             });
         }
@@ -126,6 +161,8 @@ Submit.addEventListener("click", (e) => {
 
     document.getElementById("fileName").innerHTML = "Kattints a kép kiválasztásához";
     document.getElementById("fileName").style.color = "#2c3e50";
+
+    Submit.style.display = "none";
 });
 
 document.addEventListener("DOMContentLoaded", LoadFirstFewPictures);
@@ -142,8 +179,10 @@ InputElements.Image.addEventListener("change", function() {
     if (this.files && this.files.length > 0) {
         fileNameDisplay.innerHTML = "Kiválasztott fájl: " + this.files[0].name;
         fileNameDisplay.style.color = "#3498db";
+        Submit.style.display = "block";
     } else {
         fileNameDisplay.innerHTML = "Kattints a kép kiválasztásához";
         fileNameDisplay.style.color = "#2c3e50";
+        Submit.style.display = "none";
     }
 });
