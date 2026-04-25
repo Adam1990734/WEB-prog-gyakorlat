@@ -125,9 +125,7 @@
     display: none;
 }
 
-/* =========================
-   TABLET (<= 900px)
-========================= */
+/* TABLET (<= 900px) */
 @media (max-width: 900px) {
     #kapcs {
         grid-template-columns: 1fr 260px;
@@ -139,9 +137,7 @@
     }
 }
 
-/* =========================
-   MOBIL (<= 600px)
-========================= */
+/* MOBIL (<= 600px) */
 @media (max-width: 600px) {
     #kapcs {
         grid-template-columns: 1fr;
@@ -166,9 +162,7 @@
     }
 }
 
-/* =========================
-   KIS MOBIL (<= 400px)
-========================= */
+/* KIS MOBIL (<= 400px) */
 @media (max-width: 400px) {
     #kapcs {
         padding: 15px;
