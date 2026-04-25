@@ -30,6 +30,7 @@ function ReadInput() {
 function DeletePicture(Id) {
     if(Id == null || isNaN(Id))
         throw new Error("Id specifikációs hiba!");
+    if(!confirm("Biztos benne?")) return;
     fetch(Api, {
         headers: { "Connection-Type": "application/json" },
         method: "DELETE",
@@ -71,6 +72,7 @@ function CreateCard(ImgName, ImgType, ImgSource, ImgId = null) {
 
     if(ImgId !== null && !isNaN(ImgId)) {
         const RemoveBtn = document.createElement("button");
+        RemoveBtn.className = "Deletebtn";
         RemoveBtn.innerHTML = "Törlés";
         RemoveBtn.addEventListener("click", () => DeletePicture(ImgId));
         Card.appendChild(RemoveBtn);

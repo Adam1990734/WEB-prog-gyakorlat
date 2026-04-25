@@ -172,3 +172,108 @@
 }
 
 .btn-delete:hover { background-color: #c0392b; transform: scale(1.05); }
+
+#crud {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+#crud table {
+    width: 100%;
+}
+
+@media (max-width: 900px) {
+
+    #InputArea {
+        padding: 20px;
+        margin-bottom: 30px;
+    }
+
+    #crud h3 {
+        font-size: 24px;
+    }
+
+    .table-header-actions {
+        width: 100%;
+        justify-content: center;
+    }
+
+    #LoadAll {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 600px) {
+
+    #crud h3 {
+        font-size: 20px;
+    }
+
+    #ResponsArea {
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    #InputArea {
+        padding: 15px;
+    }
+
+    #SaveButton,
+    #ResetButton {
+        width: 100%;
+        margin: 6px 0;
+    }
+
+    #crud table,
+    #crud thead,
+    #crud tbody,
+    #crud tr {
+        display: block;
+        width: 100%;
+    }
+
+    #crud thead {
+        display: none;
+    }
+
+    #crud tr {
+        background-color: #ffffff;
+        margin-bottom: 16px;
+        padding: 14px;
+        border-radius: 12px;
+        border: 1px solid #e0e0e0;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    #crud td {
+        display: block;
+        width: 100%;
+        padding: 8px 0;
+        text-align: left;
+        border: none;
+    }
+
+    #crud td::before {
+        content: attr(data-label);
+        display: block;
+        font-size: 0.75em;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #7f8c8d;
+        margin-bottom: 4px;
+    }
+
+    #crud td:last-child {
+        margin-top: 10px;
+        border-top: 1px solid #eee;
+        padding-top: 10px;
+    }
+
+    .btn-change,
+    .btn-delete {
+        width: 100%;
+        margin: 6px 0;
+    }
+}

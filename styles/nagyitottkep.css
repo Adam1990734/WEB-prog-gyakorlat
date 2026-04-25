@@ -24,3 +24,38 @@ body {
     border-radius: 8px;
     transition: transform 0.3s ease;
 }
+
+@media (max-width: 900px) {
+    #nagyitottkep {
+        padding: 20px;
+        max-width: 95vw;
+        max-height: 95vh;
+    }
+
+    #nagyitottkep img {
+        max-height: 75vh;
+    }
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    #nagyitottkep {
+        padding: 12px;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    #nagyitottkep img {
+        max-height: 70vh;
+    }
+}
+
+@media (max-height: 500px) {
+    #nagyitottkep img {
+        max-height: 60vh;
+    }
+}

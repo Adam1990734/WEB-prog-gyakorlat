@@ -51,3 +51,65 @@
     font-size: 40px;
     margin-top: 0;
 }
+
+#fooldal {
+    width: 100%;
+    max-width: 1200px;
+    box-sizing: border-box;
+}
+
+#fooldal video,
+#fooldal iframe {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+}
+
+
+@media (max-width: 900px) {
+
+    #fooldal {
+        padding: 15px;
+    }
+
+    #fooldal .hero {
+        padding: 70px 15px;
+    }
+
+    #fooldal h5 {
+        font-size: 32px;
+    }
+
+    #fooldal .video-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+@media (max-width: 600px) {
+
+    #fooldal {
+        padding: 10px;
+    }
+
+    #fooldal .hero {
+        padding: 50px 10px;
+        border-radius: 0;
+    }
+
+    #fooldal h5 {
+        font-size: 26px;
+    }
+
+    #fooldal h2 {
+        font-size: 20px;
+    }
+
+    #fooldal p {
+        font-size: 15px;
+    }
+
+    #fooldal .map-section iframe {
+        height: 250px;
+    }
+}
