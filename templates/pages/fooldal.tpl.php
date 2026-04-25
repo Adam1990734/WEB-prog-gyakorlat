@@ -4,25 +4,24 @@
         <p>A főoldal amit a gyakorlati beadandóhoz készítettünk.</p>
     </section>
 
-    <section id="videok" class="video-section ">
+    <section id="videok" class="video-section">
         <h2>Multimédia Tartalom</h2>
 
-        <div class="video-container ">
-            
-            <div style="flex: 1; min-width: 300px;">
+        <div class="video-container">
+        
+            <div class="video-item">
                 <h3>Saját videó (Helyi)</h3>
                 <video controls src="./Media/Sajatvideo.mp4"></video>
             </div>
 
-            <div style="flex: 1; min-width: 300px;">
+            <div class="video-item">
                 <h3>YouTube Videó</h3>
                 <iframe
                     src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                    frameborder="0"
                     allowfullscreen>
                 </iframe>
             </div>
-            
+        
         </div>
     </section>
 
