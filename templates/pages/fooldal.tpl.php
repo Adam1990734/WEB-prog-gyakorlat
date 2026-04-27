@@ -11,7 +11,7 @@
         
             <div class="video-item">
                 <h3>Saját videó (Helyi)</h3>
-                <video controls src="./Media/Sajatvideo.mp4"></video>
+                <video controls src="./media/Sajatvideo.mp4"></video>
             </div>
 
             <div class="video-item">
