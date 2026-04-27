@@ -35,13 +35,11 @@
                                                       LIMIT ".
                                                       $Limitation
                                                     );
-                //Nem volt jobb ötltetem jelenleg hogy legyen ennek a függvénynek az elrendezés ezért ilyen lett (biztos van szebb)
                 $SQLstmnt->execute();
                 $Result = $SQLstmnt->fetchAll();
                 foreach($Result as $key => $value)
                     $Result[$key]['kep'] = base64_encode($value['kep']);
                 return $Result;
-                return $SQLstmnt->fetchAll();
             }
             if($Limitation === 0) $SQLstmnt = $LoggingData->prepare("SELECT id, kep_nev nev, kep_tipus tipus, kep
                                                                    FROM kepek
@@ -71,8 +69,8 @@
                                                     WHERE bejelentkezes = :felhasznalonev
                                                   )
                                                   LIMIT "
-                                                  .$Limitation."
-                                                ");
+                                                  .$Limitation
+                                                );
             $SQLstmnt->execute([
                 'felhasznalonev' => $Username
             ]);
