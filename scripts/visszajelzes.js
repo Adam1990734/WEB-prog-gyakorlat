@@ -50,7 +50,7 @@ SubmitButton.addEventListener("click", (e) => {
         InputData = ReadUserInput();
     } catch(err) {
         Output.style.display = "block";
-        Output.innerHTML = "Sikeretelen üzenet küldés!";
+        Output.innerHTML = "Sikertelen üzenet küldés!";
         console.log("Sikertelen üzenet küldés: " + err.message);
     }
     SendInput(InputData);
