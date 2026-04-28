@@ -7,13 +7,7 @@
         global $LoggingData;
         if(!isset($Specification) || empty($Specification)) {
             try {
-                $SQLstmnt = null;
-                if($Limitation !== 0) $SQLstmnt = $LoggingData->query("SELECT bejelentkezes felhasznalo, uzenet, kelt
-                                                 FROM uzenetek JOIN felhasznalok ON uzenetek.felhaszn_id = felhasznalok.id
-                                                 ORDER BY 3 desc
-                                                 LIMIT ".$Limitation."
-                                                ");
-                else $SQLstmnt = $LoggingData->query("SELECT bejelentkezes felhasznalo, uzenet, kelt
+                $SQLstmnt = $LoggingData->query("SELECT bejelentkezes felhasznalo, uzenet, kelt
                                                  FROM uzenetek JOIN felhasznalok ON uzenetek.felhaszn_id = felhasznalok.id
                                                  ORDER BY 3 desc
                                                 ");
@@ -29,7 +23,7 @@
                                                ORDER BY 3 desc
                                                LIMIT ".$Limitation."
                                               ");
-            $SQLstmnt->execute([':Spec' => "%".$Specification."%"]);
+            $SQLstmnt->execute(['Spec' => "%".$Specification."%"]);
             return $SQLstmnt->fetchAll();
         } catch (Exception $e) {
             return [];
