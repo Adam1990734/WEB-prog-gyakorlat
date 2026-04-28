@@ -36,11 +36,11 @@
         }
     }
 
-    function CreateResponse($DataSet = null) {
+    function CreateResponse($Username, $Message) {
         global $LoggingData;
         try {
-            if($DataSet == null)
-                throw new Exception("No data given!");
+            if(empty($Username) || empty($Message))
+                return true;
             $SQLstmnt = $LoggingData->prepare("INSERT INTO uzenetek(felhaszn_id, uzenet, kelt) VALUES (
                                                (SELECT id FROM felhasznalok WHERE bejelentkezes = :felhasznalo),
                                                :uzenet,
@@ -48,8 +48,8 @@
                                               ");
             
             $SQLstmnt->execute([
-                ':felhasznalo' => $DataSet['felhasznalo'],
-                ':uzenet' => $DataSet['uzenet']
+                ':felhasznalo' => $Username,
+                ':uzenet' => $Message
             ]);
             return false;
         } catch(Exception $e) {
@@ -63,8 +63,6 @@
     //exit();
     //file_put_contents("./debug.log", $Data['Username'], FILE_APPEND);
     //Az átküldött adatnak 2 paramétere lesz: felhasznalo és uzenet
-    //if($Data['felhasznalo'] === null || $Data['uzenet'] === null || !empty($Data['felhasznalo']) || !empty($Data['uzenet']))
-    //    echo json_encode(["Fail" => true]);
     switch($_SERVER["REQUEST_METHOD"]) {
         case "GET":
             if(empty($_GET)) echo json_encode([
@@ -77,9 +75,14 @@
             ]);
             break;
         case "POST":
-            //file_put_contents("./debug.log", $Data, FILE_APPEND);
+            if(!isset($Data['felhasznalo']) || !isset($Data['uzenet']) || empty($Data['felhasznalo']) || empty($Data['uzenet']) ||
+                mb_strlen($Data['uzenet'], 'UTF-8') > 100
+            ) {
+                echo json_encode(["Fail" => true]);
+                break;
+            }
             echo json_encode([
-                "Fail" => CreateResponse($Data)
+                "Fail" => CreateResponse($Data['felhasznalo'], $Data['uzenet'])
             ]);
             break;
         default:

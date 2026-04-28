@@ -9,11 +9,13 @@ const Api = "./logicals/visszajelzeshandler.php";
 
 function ReadUserInput() {
     if(InputElement == null)
-        throw new Error("The given given data is empty!");
+        throw new Error("Nem lehet üres adat bevitel!");
     if (InputElement.Username.value === null || InputElement.Username.value === "")
-        throw new Error("Cannot identify the current user!");
+        throw new Error("Hiba történt az oldal betöltésekor!");
     if (InputElement.ResponseElement.value === null || InputElement.ResponseElement.value === "")
-        throw new Error("Nothing has written yet!");
+        throw new Error("Nem lehet üres beviteli mező!");
+    if(InputElement.ResponseElement.value.length > 100)
+        throw new Error("Nem megfelelő méret, nem lehet 100 karakternél több!");
     return {
         felhasznalo: InputElement.Username.value,
         uzenet: InputElement.ResponseElement.value
@@ -23,7 +25,7 @@ function ReadUserInput() {
 /**@param {Object} Response  */
 function SendInput(Response) {
     if (Response == null)
-        throw new Error("Unable to fetch with an empty Response message!");
+        throw new Error("Üres adat küldés nem lehetséges!");
     fetch(Api, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -31,7 +33,6 @@ function SendInput(Response) {
     })
     .then(Resp => Resp.json())
     .then(Data => {
-        console.log(Data);
         if(Data.Fail) Output.innerHTML = "A vissza jelzését nem sikerült rögzíteni!";
         else {
             Output.style.display = "block";
@@ -54,4 +55,6 @@ SubmitButton.addEventListener("click", (e) => {
     }
     SendInput(InputData);
     InputElement.ResponseElement.value = "";
+    Output.style.display = "none";
+    Output.innerHTML = "";
 });

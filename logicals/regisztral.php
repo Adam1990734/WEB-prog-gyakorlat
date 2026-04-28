@@ -6,8 +6,8 @@ if(
     isset($_POST['jelszo']) &&
     isset($_POST['vezeteknev']) &&
     isset($_POST['utonev']) &&
-    preg_match('/^[A-Z][a-z]+$/', $_POST['vezeteknev']) === 1 && 
-    preg_match('/^[A-Z][a-z]+$/', $_POST['utonev']) === 1
+    preg_match('/^\p{Lu}\p{Ll}+$/u', $_POST['vezeteknev']) === 1 && 
+    preg_match('/^\p{Lu}\p{Ll}+$/u', $_POST['utonev']) === 1
 ) {
     try {
         // Kapcsolódás

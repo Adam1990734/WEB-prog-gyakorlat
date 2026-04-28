@@ -1,6 +1,6 @@
 <div id="kapcs">
     <h2>Jelezz vissza nekünk!</h2>
-    <h3  id="Output"></h3>
+    <h3 id="Output"></h3>
     <form>
         <?php if(isset($_SESSION['login']) && !empty($_SESSION['login'])): ?>
             <input  type="text" style="display: none;" id="Username" name="felhasznalo" value="<?= $_SESSION['login'] ?>">
@@ -12,7 +12,7 @@
         <button type="submit" id="ResponseSubmit">Beküld</button>
     </form>
     <aside>
-        <img  src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80" alt="">
+        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80" alt="">
         <p>
             Új technológiák használatával készült felületek. <br>
             Modern kinézet és gyorsaság.

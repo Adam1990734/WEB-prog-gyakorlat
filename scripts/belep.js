@@ -17,7 +17,7 @@ function ValidateRegistration() {
     };
     if(IsNullAny(CurrentInput))
         throw new Error("Üres beviteli mező sehol nem engedélyezett!");
-    const NameRegex = /^[A-Z][a-z]+$/;
+    const NameRegex = /^\p{Lu}\p{Ll}+$/u;
     if(!NameRegex.test(CurrentInput.LastName))
         throw new Error("Nem megfelelő vezetéknév formátum!");
     if(!NameRegex.test(CurrentInput.FirstName))
