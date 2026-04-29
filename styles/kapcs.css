@@ -3,11 +3,8 @@
     max-width: 1000px;
     margin: 20px auto;
     padding: 20px;
-
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #333;
-
-    /* layout */
     display: grid;
     grid-template-columns: 1fr 320px;
     gap: 30px;
