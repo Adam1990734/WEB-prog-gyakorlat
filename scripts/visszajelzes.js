@@ -18,7 +18,7 @@ function ReadUserInput() {
         throw new Error("Nem megfelelő méret, nem lehet 100 karakternél több!");
     return {
         felhasznalo: InputElement.Username.value,
-        uzenet: InputElement.ResponseElement.value
+        uzenet: InputElement.ResponseElement.value.trim()
     };
 }
 
@@ -50,7 +50,7 @@ SubmitButton.addEventListener("click", (e) => {
         InputData = ReadUserInput();
     } catch(err) {
         Output.style.display = "block";
-        Output.innerHTML = "Sikertelen üzenet küldés!";
+        Output.innerHTML = "Sikeretelen üzenet küldés!";
         console.log("Sikertelen üzenet küldés: " + err.message);
     }
     SendInput(InputData);

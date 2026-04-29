@@ -23,7 +23,7 @@
                                                ORDER BY 3 desc
                                                LIMIT ".$Limitation."
                                               ");
-            $SQLstmnt->execute(['Spec' => "%".$Specification."%"]);
+            $SQLstmnt->execute([':Spec' => "%".$Specification."%"]);
             return $SQLstmnt->fetchAll();
         } catch (Exception $e) {
             return [];

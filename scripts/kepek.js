@@ -10,16 +10,19 @@ const Loader = document.getElementById("Loader");
 
 function ReadInput() {
     if(InputElements.Username.value === null || InputElements.Username.value === "")
-        throw new Error("There must be an owner of the picture!");
+        throw new Error("Betöltési hiba, próbálja újra!");
     if(InputElements.Image.value === null || InputElements.Image.value === "")
-        throw new Error("There must a be picture attached!");
+        throw new Error("Üres kép nem elfogadható!");
     /**@type {String} */
     const Imagetype = InputElements.Image.value.substring(InputElements.Image.value.lastIndexOf(".")+1, InputElements.Image.value.length);
     if(Imagetype !== "png" && Imagetype !== "jpg") {
         InputElements.Image.value = "";
         UserResponse.innerHTML = "Hiba a feltöltött fájl típusával, csak jpg és png!";
-        throw new Error("Not compatible type of image given! (only jpg and png accepted)");
+        throw new Error("Nem támogatott formátumok (csak JPG és PNP)!");
     }
+    const Size = (Number(InputElements.Image.files[0].size) / (1024 * 1024)).toFixed(2);
+    if(Size > 3 || Size === 0)
+        throw new Error("Túl nagy a kép fájl, maximum 3Mb!");
     return {
         Username: InputElements.Username.value,
         Image: InputElements.Image.files[0]
@@ -55,11 +58,12 @@ function DeletePicture(Id) {
     .catch(Err => console.log(Err.message));
 }
 
-function CreateCard(ImgName, ImgType, ImgSource, ImgId = null) {
+function CreateCard(ImgName, ImgSource, ImgId = null) {
     const Card = document.createElement("div");
 
     const Img = document.createElement("img");
-    Img.src = "data:" + ImgType + ";base64," + ImgSource;
+    Img.src = ImgSource;
+    Img.loading = "lazy";
     Img.alt = "Egy betöltött kép";
     Img.className = "CardImage";
 
@@ -93,7 +97,7 @@ function LoadAllPictures() {
         else {
             /**@type {Array} */
             const DataSet = Data['DataList'];
-            DataSet.forEach(Picture => Output.appendChild(CreateCard(Picture['nev'], Picture['tipus'], Picture['kep'], Picture.hasOwnProperty("id") ? Picture["id"] : null)));
+            DataSet.forEach(Picture => Output.appendChild(CreateCard(Picture['nev'], Picture['kep'], Picture.hasOwnProperty("id") ? Picture["id"] : null)));
             document.querySelectorAll(".CardImage").forEach(Card => {
                 Card.addEventListener("click", () => {
                     localStorage.setItem("ImageName", Card.parentElement.querySelector("p").innerText);
@@ -118,7 +122,7 @@ function LoadFirstFewPictures() {
         else {
             /**@type {Array} */
             const DataSet = Data['DataList'];
-            DataSet.forEach(Picture => Output.appendChild(CreateCard(Picture['nev'], Picture['tipus'], Picture['kep'], Picture.hasOwnProperty("id") ? Picture["id"] : null)));
+            DataSet.forEach(Picture => Output.appendChild(CreateCard(Picture['nev'], Picture['kep'], Picture.hasOwnProperty("id") ? Picture["id"] : null)));
             document.querySelectorAll(".CardImage").forEach(Card => {
                 Card.addEventListener("click", () => {
                     localStorage.setItem("ImageName", Card.parentElement.querySelector("p").innerText);
@@ -140,7 +144,9 @@ Submit.addEventListener("click", (e) => {
         FormDataSet.append("felhasznalo", DataSet.Username);
         FormDataSet.append("kep", DataSet.Image);
     } catch (error) {
-        console.log(error.message);
+        UserResponse.innerHTML = error.message;
+        LoadFirstFewPictures();
+        return;
     }
     fetch(Api, {
         method: "POST",
@@ -154,7 +160,7 @@ Submit.addEventListener("click", (e) => {
             else UserResponse.innerHTML = "Hiba a képek betöltésekor!";
         }
         else UserResponse.innerHTML = "Sikeres kép felötlés!";
-        LoadAllPictures();
+        LoadFirstFewPictures();
     })
     .catch(Err => console.log(Err.message));
     //Bemenet ürítése:

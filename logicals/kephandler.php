@@ -18,7 +18,7 @@
             $SQLstmnt->execute();
             return false;
         } catch(Exception $e) {
-            file_put_contents("./debug.log", 'Hiba a bevitelnél.'.$e->getMessage()."\n", FILE_APPEND);
+            //file_put_contents("./debug.log", 'Hiba a bevitelnél.'.$e->getMessage()."\n", FILE_APPEND);
             return true;
         }
     }
@@ -28,9 +28,9 @@
         try {
             $SQLstmnt = null;
             if(!isset($Username) || empty($Username) || $Username === 'vendég') {
-                if($Limitation === 0) $SQLstmnt = $LoggingData->query("SELECT kep_nev nev, kep_tipus tipus, kep
+                if($Limitation === 0) $SQLstmnt = $LoggingData->query("SELECT kep_nev nev, id kep
                                                                        FROM kepek");
-                else $SQLstmnt = $LoggingData->query("SELECT kep_nev nev, kep_tipus tipus, kep
+                else $SQLstmnt = $LoggingData->query("SELECT kep_nev nev, id kep
                                                       FROM kepek
                                                       LIMIT ".
                                                       $Limitation
@@ -38,31 +38,31 @@
                 $SQLstmnt->execute();
                 $Result = $SQLstmnt->fetchAll();
                 foreach($Result as $key => $value)
-                    $Result[$key]['kep'] = base64_encode($value['kep']);
+                    $Result[$key]['kep'] = './imgwrapper.php?id='.$Result[$key]['kep'];
                 return $Result;
             }
-            if($Limitation === 0) $SQLstmnt = $LoggingData->prepare("SELECT id, kep_nev nev, kep_tipus tipus, kep
+            if($Limitation === 0) $SQLstmnt = $LoggingData->prepare("SELECT id, kep_nev nev, id kep
                                                                    FROM kepek
                                                                    WHERE felhaszn_id = (
                                                                         SELECT id FROM felhasznalok
                                                                         WHERE bejelentkezes = :felhasznalonev
                                                                    )
                                                                    UNION ALL
-                                                                   SELECT NULL, kep_nev nev, kep_tipus tipus, kep
+                                                                   SELECT NULL, kep_nev nev, id kep
                                                                    FROM kepek
                                                                    WHERE NOT felhaszn_id = (
                                                                         SELECT id FROM felhasznalok
                                                                         WHERE bejelentkezes = :felhasznalonev
                                                                    )
                                                                   ");
-            else $SQLstmnt = $LoggingData->prepare("SELECT id, kep_nev nev, kep_tipus tipus, kep
+            else $SQLstmnt = $LoggingData->prepare("SELECT id, kep_nev nev, id kep
                                                   FROM kepek
                                                   WHERE felhaszn_id = (
                                                         SELECT id FROM felhasznalok
                                                         WHERE bejelentkezes = :felhasznalonev
                                                   )
                                                   UNION ALL
-                                                  SELECT NULL, kep_nev nev, kep_tipus tipus, kep
+                                                  SELECT NULL, kep_nev nev, id kep
                                                   FROM kepek
                                                   WHERE NOT felhaszn_id = (
                                                     SELECT id FROM felhasznalok
@@ -76,7 +76,7 @@
             ]);
             $Result = $SQLstmnt->fetchAll();
             foreach($Result as $key => $value)
-                $Result[$key]['kep'] = base64_encode($value['kep']);
+                $Result[$key]['kep'] = './imgwrapper.php?id='.$Result[$key]['kep'];
             return $Result;
         } catch(Exception $e) {
             return [];
@@ -139,6 +139,15 @@
             if((!isset($_FILES['kep']['name']) || empty($_FILES['kep']['name'])) || !isset($_POST['felhasznalo']) || empty($_POST['felhasznalo'])) {
                 //file_put_contents("./debug.log", 'Hiba POST-nál', FILE_APPEND);
                 echo json_encode(["Fail" => true]);
+                break;
+            }
+            $Size = $_FILES['kep']['size'] / (1024 * 1024);
+            //file_put_contents("./debug.log", $Size.' képméret', FILE_APPEND);
+            if($Size > 3 || $Size == 0) {
+                echo json_encode([
+                    "Fail" => true,
+                    "Message" => "Túl nagy a feltötlött kép mérete a megengedettnél (3Mb max)!"
+                ]);
                 break;
             }
             if($_POST['felhasznalo'] == 'vendég') {
