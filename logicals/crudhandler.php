@@ -16,13 +16,12 @@
 
     function CreateInventor($NewInventor) {
         global $DatabaseAPI;
-        //file_put_contents(__DIR__."/debug.log", "CREATE: ".print_r(empty($NewInventor["Died"]) ? null : $NewInventor["Died"], true)."\n", FILE_APPEND);
         try {
-            $SQLstmnt = $DatabaseAPI->prepare("INSERT INTO kutato(nev, szul, meghal) VALUES (?,?,?)");
+            $SQLstmnt = $DatabaseAPI->prepare("INSERT INTO kutato(nev, szul, meghal) VALUES ( :Nev, :Szul, :Hal)");
             $SQLstmnt->execute([
-                $NewInventor["Name"],
-                $NewInventor["Born"],
-                empty($NewInventor["Died"]) ? null : $NewInventor["Died"]
+                'Nev' => $NewInventor["Name"],
+                'Szul' => $NewInventor["Born"],
+                'Hal' => empty($NewInventor["Died"]) ? null : $NewInventor["Died"]
             ]);
         } catch(Exception $e) {
             throw new Exception($e->getMessage());
@@ -32,24 +31,26 @@
     function UpdateInventor($Id, $NewAttributes) {
         global $DatabaseAPI;
         try {
-            $SQLstmnt = $DatabaseAPI->prepare("UPDATE kutato SET nev = ?, szul = ?, meghal = ? WHERE fkod = ?");
+            $SQLstmnt = $DatabaseAPI->prepare("UPDATE kutato SET nev = :Nev, szul = :Szul, meghal = :Hal WHERE fkod = :Id");
             $SQLstmnt->execute([
-                $NewAttributes["Name"],
-                $NewAttributes["Born"],
-                empty($NewAttributes["Died"]) ? null : $NewAttributes["Died"],
-                $Id
+                'Nev' => $NewAttributes["Name"],
+                'Szul' => $NewAttributes["Born"],
+                'Hal' => empty($NewAttributes["Died"]) ? null : $NewAttributes["Died"],
+                'Id' => $Id
             ]);
         } catch(Exception $e) {
             throw new Exception($e->getMessage());
         }
     }
+
     function DeleteInventor($Id) {
         global $DatabaseAPI;
         try {
-            $SQLstmnt = $DatabaseAPI->prepare("DELETE FROM kutato WHERE fkod = ?");
-            $SQLstmnt->execute([$Id]);
+            $SQLstmnt = $DatabaseAPI->prepare("DELETE FROM kutato WHERE fkod = :Id");
+            $SQLstmnt->execute([
+                'Id' => $Id
+            ]);
         } catch(Exception $e) {
-            //file_put_contents(__DIR__."/debug.log", "DELETE: ".$e->getMessage()."\n", FILE_APPEND);
             throw new Exception($e->getMessage());
         }
     }
