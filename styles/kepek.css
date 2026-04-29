@@ -245,12 +245,12 @@
     }
 
     #Output {
-        padding: 10px;
-        gap: 15px;
+        padding: 5px;
+        gap: 10px;
     }
 
     #Output > div {
-        padding: 12px;
+        padding: 8px;
     }
 
     #Output p {

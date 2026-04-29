@@ -13,7 +13,6 @@
     gap: 30px;
 }
 
-/* címek teljes szélesség */
 #kapcs h2,
 #kapcs h3 {
     grid-column: 1 / -1;
@@ -33,7 +32,6 @@
     color: #3498db;
 }
 
-/* FORM */
 #kapcs form {
     background-color: #ffffff;
     padding: 25px;
@@ -46,7 +44,6 @@
     gap: 15px;
 }
 
-/* TEXTAREA */
 #kapcs #ResponseArea {
     width: 100%;
     min-height: 160px;
@@ -66,7 +63,6 @@
     box-shadow: 0 0 0 3px rgba(52,152,219,0.15);
 }
 
-/* BUTTON */
 #kapcs #ResponseSubmit {
     align-self: flex-start;
     background-color: #2c3e50;
@@ -125,7 +121,6 @@
     display: none;
 }
 
-/* TABLET (<= 900px) */
 @media (max-width: 900px) {
     #kapcs {
         grid-template-columns: 1fr 260px;
@@ -137,13 +132,11 @@
     }
 }
 
-/* MOBIL (<= 600px) */
 @media (max-width: 600px) {
     #kapcs {
         grid-template-columns: 1fr;
     }
 
-    /* minden elem teljes szélesség */
     #kapcs h2,
     #kapcs h3,
     #kapcs form,
@@ -162,7 +155,6 @@
     }
 }
 
-/* KIS MOBIL (<= 400px) */
 @media (max-width: 400px) {
     #kapcs {
         padding: 15px;

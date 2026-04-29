@@ -11,7 +11,6 @@ h2, h3 {
     text-align: center;
 }
 
-/* Fieldset és Legend stílusozása */
 fieldset {
     border: 1px solid #e0e0e0;
     border-radius: 12px;
@@ -26,7 +25,6 @@ legend {
     font-size: 1.1em;
 }
 
-/* Input mezők (szöveg és jelszó) */
 input[type="text"],
 input[type="password"] {
     width: 100%;
@@ -40,7 +38,6 @@ input[type="password"] {
     transition: border 0.3s, box-shadow 0.3s;
 }
 
-/* Fókusz állapot (ha belelép a felhasználó) */
 input[type="text"]:focus,
 input[type="password"]:focus {
     outline: none;
@@ -48,7 +45,6 @@ input[type="password"]:focus {
     box-shadow: 0 0 8px rgba(52, 152, 219, 0.2);
 }
 
-/* A beküldő gombok (Submit) */
 input[type="submit"] {
     width: 100%;
     background-color: #2c3e50;
@@ -72,7 +68,6 @@ input[type="submit"]:active {
     transform: scale(0.98);
 }
 
-/* Output üzenet (hiba vagy siker esetén) */
 #Output {
     max-width: 500px;
     margin: 0 auto 20px auto;
@@ -84,7 +79,6 @@ input[type="submit"]:active {
     border-radius: 8px;
 }
 
-/* Mobil nézethez finomítás */
 @media (max-width: 600px) {
     #belepes, #regisztracio {
         width: 100%;

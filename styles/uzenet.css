@@ -6,7 +6,6 @@
     text-align: center;
 }
 
-/* Üzenetek tárolója (Flexbox oszlop elrendezés) */
 #uzenet #Output {
     display: flex;
     flex-direction: column;
@@ -14,7 +13,6 @@
     margin-bottom: 25px;
 }
 
-/* Egy üzenet kártya */
 #uzenet #Output > div {
     background-color: #ffffff;
     border-radius: 12px;
@@ -42,7 +40,6 @@
     font-weight: bold;
 }
 
-/* Az üzenet szövegének doboza */
 #uzenet #Output > div > article {
     padding: 14px 16px;
     background-color: #f8f9fa;
@@ -53,11 +50,10 @@
     margin: 0;
 }
 
-/* Az ÖSSZES gomb stílusa - Egységesítve a menüvel */
 #uzenet #Loader {
     display: block;
-    margin: 20px auto; /* Középre igazítás */
-    background-color: #2c3e50; /* Sötétkék alap */
+    margin: 20px auto;
+    background-color: #2c3e50;
     color: #ecf0f1;
     padding: 12px 28px;
     border: none;
@@ -69,7 +65,7 @@
 }
 
 #uzenet #Loader:hover {
-    background-color: #3498db; /* Világoskék hover */
+    background-color: #3498db;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     transform: translateY(-2px);
 }

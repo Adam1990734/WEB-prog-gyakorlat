@@ -7,7 +7,6 @@
     font-size: 30px;
 }
 
-/* VISSZAJELZŐ SÁV */
 #ResponsArea {
     width: 100%;
     max-width: 500px;
@@ -34,7 +33,6 @@
     border: 1px solid #ffcdd2;
 }
 
-/* ŰRLAP KONTÉNER */
 #InputArea {
     background-color: #ffffff;
     padding: 30px;
@@ -71,7 +69,6 @@
     box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
 }
 
-/* FŐ GOMBOK (Save, Clear) */
 #SaveButton, #ResetButton {
     padding: 10px 22px;
     border-radius: 10px;
@@ -97,7 +94,6 @@
     margin-left: 10px;
 }
 
-/* TÁBLÁZAT FELETTI "ÖSSZES" GOMB */
 .table-header-actions {
     width: 90%;
     margin: 0 auto 10px auto;
@@ -120,7 +116,6 @@
     background-color: #3498db;
 }
 
-/* TÁBLÁZAT ÉS MŰVELET GOMBOK */
 #crud table {
     width: 90%;
     margin: 0 auto;
@@ -144,7 +139,6 @@
     border-bottom: 1px solid #eee;
 }
 
-/* Narancs "Change" gomb */
 .btn-change {
     background-color: #f39c12;
     color: white;
@@ -159,7 +153,6 @@
 
 .btn-change:hover { background-color: #e67e22; transform: scale(1.05); }
 
-/* Piros "Delete" gomb */
 .btn-delete {
     background-color: #e74c3c;
     color: white;

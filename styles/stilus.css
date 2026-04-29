@@ -84,7 +84,17 @@ nav ul li.active {
 }
 
 @media (max-width: 768px) {
+    div#wrapper {
+        margin: 5px;
+    }
+    header, footer {
+        margin: 10px 5px;
+    }
+    div#content {
+        padding: 10px;
+    }
     nav {
+        margin: 0 0 10px 0;
         flex-direction: column;
         align-items: flex-start;
         padding: 0 20px;

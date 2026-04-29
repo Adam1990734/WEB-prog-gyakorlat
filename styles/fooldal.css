@@ -3,7 +3,7 @@
     line-height: 1.6;
     background-color: #f4f4f9;
     color: #333;
-    width: 80%;
+    width: 100%;
     max-width: 1200px;
     margin: auto;
     overflow: hidden;
@@ -91,7 +91,8 @@
 @media (max-width: 900px) {
 
     #fooldal {
-        padding: 15px;
+        width: 100%;
+        padding: 0;
     }
 
     #fooldal .hero {
@@ -124,8 +125,9 @@
     }
 
     #fooldal .hero {
-        padding: 50px 10px;
         border-radius: 0;
+        margin: -10px -10px 20px -10px;
+        padding: 40px 10px;
     }
 
     #fooldal h5 {
