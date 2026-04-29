@@ -134,7 +134,8 @@ function ReadInventors() {
         });
 }
 
-function CreateInventor(Record = { Name: "", Born: 0, Died: 0 }) {
+/**@param {{ Name: string; Born: number; Died: number; }} Record  */
+function CreateInventor(Record) {
     fetch(ServerApi, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

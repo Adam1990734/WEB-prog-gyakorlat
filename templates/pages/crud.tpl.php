@@ -12,8 +12,8 @@
         <label for="Died">A feltaláló halálozási éve</label> <br>
         <input id="Died" name="Died" type="number" ...> <br> <br>
 
-        <button id="SaveButton" type="submit">Save</button>
-        <button id="ResetButton" type="reset">Clear</button>
+        <button id="SaveButton" type="submit">Mentés</button>
+        <button id="ResetButton" type="reset">Visszaállít</button>
     </form>
     <div class="table-header-actions">
         <button id="LoadAll">Összes</button>
