@@ -73,3 +73,12 @@
 #uzenet #Loader:active {
     transform: translateY(0);
 }
+
+@media (max-width: 600px) {
+    div#content {
+        padding: 10px;
+    }
+    #uzenet .uzenetek p {
+        font-size: 12px;
+    }
+}

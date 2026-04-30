@@ -2,12 +2,12 @@ const InputElements = {
     Name: document.getElementById("Name"),
     Born: document.getElementById("Born"),
     Died: document.getElementById("Died")
-};//= Input elemek
-const OutputElement = document.getElementById("OutputArea");//= a tbody elemmel
-const ResponsElement = document.getElementById("ResponsArea");//= ide jönnek az üzenetek a fetch-ből!
-const SaveButton = document.getElementById("SaveButton");//form-nak a submit gombja
+};
+const OutputElement = document.getElementById("OutputArea");
+const ResponsElement = document.getElementById("ResponsArea");
+const SaveButton = document.getElementById("SaveButton");
 const ResetButton = document.getElementById("ResetButton");
-const LoadAll = document.getElementById("LoadAll");//Mind betöltés
+const LoadAll = document.getElementById("LoadAll");
 const ServerApi = "./logicals/crudhandler.php";
 
 //================================== Fetch rendszer ========================================

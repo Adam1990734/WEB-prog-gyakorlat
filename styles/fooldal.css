@@ -119,9 +119,12 @@
 }
 
 @media (max-width: 600px) {
+    div#content {
+        padding: 10px;
+    }
 
     #fooldal {
-        padding: 10px;
+        margin: 0px;
     }
 
     #fooldal .hero {

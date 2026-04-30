@@ -6,12 +6,12 @@ const Api = "./logicals/visszajelzeshandler.php";
 function CreateMessage(Record) {
     if(Record === null)
         throw new Error("Not loadable record data given!");
-    const Row = document.createElement("div"); Row.className = "uzenet";
+    const Row = document.createElement("div"); Row.className = "uzenetek";
 
-    const Header = document.createElement("div"); Header.className = "uzenet";
-    Header.innerHTML = "<span class=\"uzenet\">" + Record.felhasznalo + "</span> <br>" + Record.kelt + "<br> <br>";
+    const Header = document.createElement("div");
+    Header.innerHTML = "<span>" + Record.felhasznalo + "</span> <p>" + Record.kelt + "</p>";
 
-    const Content = document.createElement("article"); Content.className = "uzenet";
+    const Content = document.createElement("article");
     Content.innerText = Record.uzenet;
 
     Row.appendChild(Header);

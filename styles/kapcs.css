@@ -130,6 +130,10 @@
 }
 
 @media (max-width: 600px) {
+    div#content {
+        padding: 10px;
+    }
+
     #kapcs {
         grid-template-columns: 1fr;
     }

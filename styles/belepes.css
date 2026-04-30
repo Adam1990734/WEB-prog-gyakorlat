@@ -80,6 +80,10 @@ input[type="submit"]:active {
 }
 
 @media (max-width: 600px) {
+    div#content {
+        padding: 10px;
+    }
+
     #belepes, #regisztracio {
         width: 100%;
     }
